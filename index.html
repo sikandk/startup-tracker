@@ -582,7 +582,7 @@ function openM(i){
   document.getElementById('mName').textContent=d.name;
   document.getElementById('mDate').textContent=d.date+' · '+flag(d.region_group)+' '+d.region;
   const a=document.getElementById('mAmt'); a.textContent=fmt(d.amount_m); a.className='m-amt num'+(d.amount_m==null?' none':'');
-  document.getElementById('mRaw').textContent=((d.roundsize&&d.amount_m!=null)?'as recorded: '+d.roundsize+'  ·  ':'')+(d.score_why||'');
+  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Market position '+d.score+'/100</b> — the average of the two signals below</div>':'')+(d.score_why?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'');
   document.getElementById('mTags').innerHTML='<span class="tag t-type">'+esc(typeLabel(d.type))+'</span>'+
     (d.stage&&d.stage!=='Unknown'?'<span class="tag t-stage">'+esc(d.stage)+'</span>':'')+
     '<span class="tag">'+esc(d.sector_group||'—')+'</span>'+
