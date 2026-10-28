@@ -54,6 +54,10 @@
   .hero-sub { margin-top: 20px; font-size: 17px; color: var(--ink-2); max-width: 54ch; line-height: 1.6; position: relative; z-index: 1; }
   .hero-sub b { color: var(--ink); font-weight: 650; }
   .hero-date { font-size: 12.5px; color: var(--ink-3); margin-top: 14px; position: relative; z-index: 1; }
+  .t-score{font-variant-numeric:tabular-nums;font-weight:600}
+  .sc-hi{background:rgba(45,160,100,.16);color:#2da064}
+  .sc-mid{background:rgba(140,140,150,.16);color:var(--ink-2)}
+  .sc-lo{background:rgba(200,120,90,.14);color:#c8785a}
 
   .pills { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 44px; padding-bottom: 40px; position: relative; z-index: 1; }
   .pill { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-lg); padding: 20px 22px; transition: all .22s cubic-bezier(.4,0,.2,1); }
@@ -285,6 +289,7 @@
           <option value="amt-desc">Largest round</option>
           <option value="amt-asc">Smallest round</option>
           <option value="name-asc">A → Z</option>
+          <option value="score-desc">Highest score</option>
         </select>
         <div class="view-switch">
           <button class="active" data-view="cards">Cards</button>
@@ -380,6 +385,7 @@ function sortData(a){
   else if(sortBy==='amt-desc')x.sort((p,q)=>(q.amount_m??-1)-(p.amount_m??-1));
   else if(sortBy==='amt-asc')x.sort((p,q)=>(p.amount_m??1e9)-(q.amount_m??1e9));
   else if(sortBy==='name-asc')x.sort((p,q)=>p.name.localeCompare(q.name));
+  else if(sortBy==='score-desc')x.sort((p,q)=>(q.score??-1)-(p.score??-1));
   return x;
 }
 
@@ -525,7 +531,9 @@ function cards(d){
       '<div class="deal-amt num '+amtCls+'">'+fmt(x.amount_m)+'</div>'+
       '<div class="deal-tags"><span class="tag t-type">'+esc(typeLabel(x.type))+'</span>'+
       (x.stage&&x.stage!=='Unknown'?'<span class="tag t-stage">'+esc(x.stage)+'</span>':'')+
-      '<span class="tag">'+esc(x.sector_group||'—')+'</span></div>'+
+      '<span class="tag">'+esc(x.sector_group||'—')+'</span>'+
+      (x.score!=null?'<span class="tag t-score '+(x.score>=70?'sc-hi':x.score>=40?'sc-mid':'sc-lo')+'" title="'+esc(x.score_why)+'">'+x.score+'</span>':'')+
+      '</div>'+
       '<div class="deal-note">'+esc(x.note||'No description recorded.')+'</div>'+
       '<div class="deal-foot"><span>'+flag(x.region_group)+' '+esc(x.region)+'</span>'+(x.source?'<span class="deal-src">Source ↗</span>':'')+'</div>'+
     '</div>';
@@ -576,7 +584,7 @@ function openM(i){
   document.getElementById('mName').textContent=d.name;
   document.getElementById('mDate').textContent=d.date+' · '+flag(d.region_group)+' '+d.region;
   const a=document.getElementById('mAmt'); a.textContent=fmt(d.amount_m); a.className='m-amt num'+(d.amount_m==null?' none':'');
-  document.getElementById('mRaw').textContent=(d.roundsize&&d.amount_m!=null)?'as recorded: '+d.roundsize:'';
+  document.getElementById('mRaw').textContent=((d.roundsize&&d.amount_m!=null)?'as recorded: '+d.roundsize+'  ·  ':'')+(d.score_why||'');
   document.getElementById('mTags').innerHTML='<span class="tag t-type">'+esc(typeLabel(d.type))+'</span>'+
     (d.stage&&d.stage!=='Unknown'?'<span class="tag t-stage">'+esc(d.stage)+'</span>':'')+
     '<span class="tag">'+esc(d.sector_group||'—')+'</span>'+
