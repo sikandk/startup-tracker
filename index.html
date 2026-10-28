@@ -54,10 +54,10 @@
   .hero-sub { margin-top: 20px; font-size: 17px; color: var(--ink-2); max-width: 54ch; line-height: 1.6; position: relative; z-index: 1; }
   .hero-sub b { color: var(--ink); font-weight: 650; }
   .hero-date { font-size: 12.5px; color: var(--ink-3); margin-top: 14px; position: relative; z-index: 1; }
-  .t-score{font-variant-numeric:tabular-nums;font-weight:600}
+  .score-pill{display:inline-block;margin-left:10px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;vertical-align:middle;font-variant-numeric:tabular-nums}
   .sc-hi{background:rgba(45,160,100,.16);color:#2da064}
-  .sc-mid{background:rgba(140,140,150,.16);color:var(--ink-2)}
-  .sc-lo{background:rgba(200,120,90,.14);color:#c8785a}
+  .sc-mid{background:rgba(140,140,150,.18);color:#8a8a92}
+  .sc-lo{background:rgba(200,120,90,.16);color:#c8785a}
 
   .pills { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 44px; padding-bottom: 40px; position: relative; z-index: 1; }
   .pill { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-lg); padding: 20px 22px; transition: all .22s cubic-bezier(.4,0,.2,1); }
@@ -528,12 +528,10 @@ function cards(d){
     return '<div class="deal" onclick="openM('+i+')">'+
       '<div class="deal-top"><div class="avatar" style="background:'+c+'">'+esc(initials(x.name))+'</div>'+
       '<div class="deal-id"><div class="deal-name">'+esc(x.name)+'</div><div class="deal-date num">'+esc(x.date)+'</div></div></div>'+
-      '<div class="deal-amt num '+amtCls+'">'+fmt(x.amount_m)+'</div>'+
+      '<div class="deal-amt num '+amtCls+'">'+fmt(x.amount_m)+(x.score!=null?'<span class="score-pill '+(x.score>=70?'sc-hi':x.score>=40?'sc-mid':'sc-lo')+'" title="'+esc(x.score_why)+'">'+x.score+'</span>':'')+'</div>'+
       '<div class="deal-tags"><span class="tag t-type">'+esc(typeLabel(x.type))+'</span>'+
       (x.stage&&x.stage!=='Unknown'?'<span class="tag t-stage">'+esc(x.stage)+'</span>':'')+
-      '<span class="tag">'+esc(x.sector_group||'—')+'</span>'+
-      (x.score!=null?'<span class="tag t-score '+(x.score>=70?'sc-hi':x.score>=40?'sc-mid':'sc-lo')+'" title="'+esc(x.score_why)+'">'+x.score+'</span>':'')+
-      '</div>'+
+      '<span class="tag">'+esc(x.sector_group||'—')+'</span></div>'+
       '<div class="deal-note">'+esc(x.note||'No description recorded.')+'</div>'+
       '<div class="deal-foot"><span>'+flag(x.region_group)+' '+esc(x.region)+'</span>'+(x.source?'<span class="deal-src">Source ↗</span>':'')+'</div>'+
     '</div>';
