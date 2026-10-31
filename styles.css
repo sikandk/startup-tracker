@@ -1,8 +1,6 @@
 /* ============================================================
-   Shared design tokens — landing page + tracker
-   Single source of truth. Edit here, both pages follow.
-   Source file lives beside dashboard.html; publish.py copies
-   it into the repo root and into /tracker/.
+   Shared design tokens for the tracker.
+   Single source of truth for colours, type and spacing.
    ============================================================ */
 
 :root {

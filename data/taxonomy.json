@@ -1,0 +1,600 @@
+{
+ "types": {
+  "raise": "Raise",
+  "ma": "M&A",
+  "fund": "Fund",
+  "ipo": "IPO"
+ },
+ "stages": [
+  "Pre-Seed",
+  "Seed",
+  "Series A",
+  "Series B",
+  "Series C",
+  "Series D",
+  "Series E",
+  "Series F",
+  "Series G",
+  "Series H",
+  "Growth",
+  "Debt",
+  "Private Equity",
+  "Strategic",
+  "Acquisition",
+  "IPO",
+  "Fund",
+  "Other",
+  "Undisclosed"
+ ],
+ "sector_groups": [
+  "AI & Infrastructure",
+  "Enterprise Software",
+  "FinTech & Crypto",
+  "Health & Bio",
+  "Climate & Energy",
+  "Robotics & Industrial",
+  "Consumer & Commerce",
+  "Defence & Aerospace",
+  "HR, Legal & GovTech",
+  "Cybersecurity",
+  "Semiconductors & Quantum",
+  "PropTech & Construction",
+  "AgTech",
+  "Developer Tools",
+  "Other",
+  "Unknown"
+ ],
+ "region_groups": {
+  "CA": "Canada",
+  "US": "USA",
+  "*": "International",
+  "null": "Unknown"
+ },
+ "regions": [
+  {
+   "region": "Sydney",
+   "subdivision": null,
+   "country": "AU"
+  },
+  {
+   "region": "Canada",
+   "subdivision": null,
+   "country": "CA"
+  },
+  {
+   "region": "Calgary",
+   "subdivision": "AB",
+   "country": "CA"
+  },
+  {
+   "region": "Edmonton",
+   "subdivision": "AB",
+   "country": "CA"
+  },
+  {
+   "region": "Raymond",
+   "subdivision": "AB",
+   "country": "CA"
+  },
+  {
+   "region": "British Columbia",
+   "subdivision": "BC",
+   "country": "CA"
+  },
+  {
+   "region": "Burnaby",
+   "subdivision": "BC",
+   "country": "CA"
+  },
+  {
+   "region": "Delta",
+   "subdivision": "BC",
+   "country": "CA"
+  },
+  {
+   "region": "Richmond",
+   "subdivision": "BC",
+   "country": "CA"
+  },
+  {
+   "region": "Salmon Arm",
+   "subdivision": "BC",
+   "country": "CA"
+  },
+  {
+   "region": "Vancouver",
+   "subdivision": "BC",
+   "country": "CA"
+  },
+  {
+   "region": "Victoria",
+   "subdivision": "BC",
+   "country": "CA"
+  },
+  {
+   "region": "Winnipeg",
+   "subdivision": "MB",
+   "country": "CA"
+  },
+  {
+   "region": "Fredericton",
+   "subdivision": "NB",
+   "country": "CA"
+  },
+  {
+   "region": "Saint John",
+   "subdivision": "NB",
+   "country": "CA"
+  },
+  {
+   "region": "St. John's",
+   "subdivision": "NL",
+   "country": "CA"
+  },
+  {
+   "region": "Dartmouth",
+   "subdivision": "NS",
+   "country": "CA"
+  },
+  {
+   "region": "Halifax",
+   "subdivision": "NS",
+   "country": "CA"
+  },
+  {
+   "region": "New Minas",
+   "subdivision": "NS",
+   "country": "CA"
+  },
+  {
+   "region": "Aurora",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Brampton",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Cambridge",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Guelph",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Hamilton",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Kingston",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Kitchener-Waterloo",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Ottawa",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Toronto",
+   "subdivision": "ON",
+   "country": "CA"
+  },
+  {
+   "region": "Laval",
+   "subdivision": "QC",
+   "country": "CA"
+  },
+  {
+   "region": "Montréal",
+   "subdivision": "QC",
+   "country": "CA"
+  },
+  {
+   "region": "Québec",
+   "subdivision": "QC",
+   "country": "CA"
+  },
+  {
+   "region": "Québec City",
+   "subdivision": "QC",
+   "country": "CA"
+  },
+  {
+   "region": "Sherbrooke",
+   "subdivision": "QC",
+   "country": "CA"
+  },
+  {
+   "region": "Regina",
+   "subdivision": "SK",
+   "country": "CA"
+  },
+  {
+   "region": "Saskatoon",
+   "subdivision": "SK",
+   "country": "CA"
+  },
+  {
+   "region": "Shanghai",
+   "subdivision": null,
+   "country": "CN"
+  },
+  {
+   "region": "Prague",
+   "subdivision": null,
+   "country": "CZ"
+  },
+  {
+   "region": "Metzingen",
+   "subdivision": null,
+   "country": "DE"
+  },
+  {
+   "region": "Munich",
+   "subdivision": null,
+   "country": "DE"
+  },
+  {
+   "region": "Copenhagen",
+   "subdivision": null,
+   "country": "DK"
+  },
+  {
+   "region": "Finland",
+   "subdivision": null,
+   "country": "FI"
+  },
+  {
+   "region": "Helsinki",
+   "subdivision": null,
+   "country": "FI"
+  },
+  {
+   "region": "France",
+   "subdivision": null,
+   "country": "FR"
+  },
+  {
+   "region": "Paris",
+   "subdivision": null,
+   "country": "FR"
+  },
+  {
+   "region": "London",
+   "subdivision": null,
+   "country": "GB"
+  },
+  {
+   "region": "Manchester",
+   "subdivision": null,
+   "country": "GB"
+  },
+  {
+   "region": "Oxford",
+   "subdivision": null,
+   "country": "GB"
+  },
+  {
+   "region": "United Kingdom",
+   "subdivision": null,
+   "country": "GB"
+  },
+  {
+   "region": "Tokyo",
+   "subdivision": null,
+   "country": "JP"
+  },
+  {
+   "region": "Amsterdam",
+   "subdivision": null,
+   "country": "NL"
+  },
+  {
+   "region": "New Zealand",
+   "subdivision": null,
+   "country": "NZ"
+  },
+  {
+   "region": "Stockholm",
+   "subdivision": null,
+   "country": "SE"
+  },
+  {
+   "region": "Sweden",
+   "subdivision": null,
+   "country": "SE"
+  },
+  {
+   "region": "United States",
+   "subdivision": null,
+   "country": "US"
+  },
+  {
+   "region": "Alameda",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "California",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "El Segundo",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Huntington Beach",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Laguna Beach",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Los Angeles",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Mountain View",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Palo Alto",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Redondo Beach",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "San Diego",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "San Francisco",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "San Jose",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "San Mateo",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Santa Clara",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Santa Fe Springs",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Silicon Valley",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "South Pasadena",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "South San Francisco",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Sunnyvale",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Torrance",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Walnut Creek",
+   "subdivision": "CA",
+   "country": "US"
+  },
+  {
+   "region": "Boulder",
+   "subdivision": "CO",
+   "country": "US"
+  },
+  {
+   "region": "Colorado",
+   "subdivision": "CO",
+   "country": "US"
+  },
+  {
+   "region": "Denver",
+   "subdivision": "CO",
+   "country": "US"
+  },
+  {
+   "region": "Longmont",
+   "subdivision": "CO",
+   "country": "US"
+  },
+  {
+   "region": "New Haven",
+   "subdivision": "CT",
+   "country": "US"
+  },
+  {
+   "region": "Washington",
+   "subdivision": "DC",
+   "country": "US"
+  },
+  {
+   "region": "Miami",
+   "subdivision": "FL",
+   "country": "US"
+  },
+  {
+   "region": "Orlando",
+   "subdivision": "FL",
+   "country": "US"
+  },
+  {
+   "region": "Norcross",
+   "subdivision": "GA",
+   "country": "US"
+  },
+  {
+   "region": "Idaho",
+   "subdivision": "ID",
+   "country": "US"
+  },
+  {
+   "region": "Illinois",
+   "subdivision": "IL",
+   "country": "US"
+  },
+  {
+   "region": "Boston",
+   "subdivision": "MA",
+   "country": "US"
+  },
+  {
+   "region": "Cambridge",
+   "subdivision": "MA",
+   "country": "US"
+  },
+  {
+   "region": "Massachusetts",
+   "subdivision": "MA",
+   "country": "US"
+  },
+  {
+   "region": "Ann Arbor",
+   "subdivision": "MI",
+   "country": "US"
+  },
+  {
+   "region": "North Carolina",
+   "subdivision": "NC",
+   "country": "US"
+  },
+  {
+   "region": "Incline Village",
+   "subdivision": "NV",
+   "country": "US"
+  },
+  {
+   "region": "Reno",
+   "subdivision": "NV",
+   "country": "US"
+  },
+  {
+   "region": "Brooklyn",
+   "subdivision": "NY",
+   "country": "US"
+  },
+  {
+   "region": "New York",
+   "subdivision": "NY",
+   "country": "US"
+  },
+  {
+   "region": "Columbus",
+   "subdivision": "OH",
+   "country": "US"
+  },
+  {
+   "region": "Independence",
+   "subdivision": "OH",
+   "country": "US"
+  },
+  {
+   "region": "Wayne",
+   "subdivision": "PA",
+   "country": "US"
+  },
+  {
+   "region": "Rhode Island",
+   "subdivision": "RI",
+   "country": "US"
+  },
+  {
+   "region": "Nashville",
+   "subdivision": "TN",
+   "country": "US"
+  },
+  {
+   "region": "Austin",
+   "subdivision": "TX",
+   "country": "US"
+  },
+  {
+   "region": "Bastrop",
+   "subdivision": "TX",
+   "country": "US"
+  },
+  {
+   "region": "Dallas",
+   "subdivision": "TX",
+   "country": "US"
+  },
+  {
+   "region": "Houston",
+   "subdivision": "TX",
+   "country": "US"
+  },
+  {
+   "region": "Texas",
+   "subdivision": "TX",
+   "country": "US"
+  },
+  {
+   "region": "Bellevue",
+   "subdivision": "WA",
+   "country": "US"
+  },
+  {
+   "region": "Kent",
+   "subdivision": "WA",
+   "country": "US"
+  },
+  {
+   "region": "Seattle",
+   "subdivision": "WA",
+   "country": "US"
+  },
+  {
+   "region": "Undisclosed",
+   "subdivision": null,
+   "country": null
+  }
+ ]
+}
