@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Startup Activity Tracker</title>
+<title>Cubant — Startup Activity Tracker</title>
 <meta name="description" content="A continuously expanding record of North American venture funding. Filter, sort and open any deal.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@3.1.0/dist/chartjs-chart-treemap.min.js"></script>
@@ -24,7 +24,7 @@
   nav { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
   .nav-in { display: flex; align-items: center; gap: 12px; max-width: 1280px; margin: 0 auto; padding: 14px 28px; }
   .logo { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
-  .logo-dot { width: 26px; height: 26px; border-radius: 4px; background: var(--brand); display: grid; place-items: center; color: #fff; font-size: 13px; }
+  .logo svg { flex: none; }
 
   /* ── Hero ────────────────────────────── */
   .hero { background: var(--paper); border-bottom: 1px solid var(--line); padding: 64px 0 0; position: relative; overflow: hidden; }
@@ -212,7 +212,7 @@
 
 <nav>
   <div class="nav-in">
-    <div class="logo"><span class="logo-dot">◆</span> Startup Tracker</div>
+    <div class="logo"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--brand-on-dark)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z"></path><path d="M12 12 L21 7"></path><path d="M12 12 L3 7"></path><path d="M12 12 L12 22"></path></svg> Cubant</div>
   </div>
 </nav>
 
