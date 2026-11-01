@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cubant — Startup Activity Tracker</title>
-<meta name="description" content="A continuously expanding record of North American venture funding. Filter, sort and open any deal.">
+<meta name="description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@3.1.0/dist/chartjs-chart-treemap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -219,9 +219,9 @@
 <div class="hero">
   <div class="wrap">
     <div class="eyebrow">● Updated weekly</div>
-    <h1 class="big">Every round, measured against <em>the rounds like it</em>.</h1>
-    <p class="hero-sub">A continuously expanding record of North American venture funding. <b>Filter it, sort it, open any deal.</b></p>
-    <p class="hero-date">Venture activity · Jan 02, 2025 – Oct 28, 2026<span style="opacity:.55"> · updated Oct 31, 2026</span></p>
+    <h1 class="big">Every round, read against its cohort with a <em>signal score</em>.</h1>
+    <p class="hero-sub">Venture funding across Canada, the US, and beyond. <b>Filter it, sort it, open any deal.</b></p>
+    <p class="hero-date">Venture activity · Jan 02, 2025 – Oct 28, 2026<span style="opacity:.55"> · updated Nov 01, 2026</span></p>
     <div class="pills">
       <div class="pill"><div class="pill-n num" id="k-total">—</div><div class="pill-l" id="k-total-l">deals tracked</div></div>
       <div class="pill"><div class="pill-n num" id="k-cap">—</div><div class="pill-l" id="k-cap-l">capital raised</div></div>
@@ -589,7 +589,7 @@ function openM(i){
   document.getElementById('mName').textContent=d.name;
   document.getElementById('mDate').textContent=d.date+' · '+flag(d.region_group)+' '+d.region;
   const a=document.getElementById('mAmt'); a.textContent=fmt(d.amount_m); a.className='m-amt num'+(d.amount_m==null?' none':'');
-  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Market position '+d.score+'/100</b> — the average of the two signals below</div>':'')+(d.score_why?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'');
+  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Signal score '+d.score+'/100</b> — built from the two measures below</div>':'')+(d.score_why?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'');
   document.getElementById('mTags').innerHTML='<span class="tag t-type">'+esc(typeLabel(d.type))+'</span>'+
     (d.stage&&d.stage!=='Unknown'?'<span class="tag t-stage">'+esc(d.stage)+'</span>':'')+
     '<span class="tag">'+esc(d.sector_group||'—')+'</span>'+
