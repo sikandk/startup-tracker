@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Startup Activity Tracker</title>
-<meta name="description" content="A continuously expanding record of North American venture funding. Filter, sort and open any deal.">
+<title>Cubant — Startup Activity Tracker</title>
+<meta name="description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@3.1.0/dist/chartjs-chart-treemap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
   nav { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
   .nav-in { display: flex; align-items: center; gap: 12px; max-width: 1280px; margin: 0 auto; padding: 14px 28px; }
   .logo { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
-  .logo-dot { width: 26px; height: 26px; border-radius: 4px; background: var(--brand); display: grid; place-items: center; color: #fff; font-size: 13px; }
+  .logo svg { flex: none; }
 
   /* ── Hero ────────────────────────────── */
   .hero { background: var(--paper); border-bottom: 1px solid var(--line); padding: 64px 0 0; position: relative; overflow: hidden; }
@@ -212,15 +212,15 @@
 
 <nav>
   <div class="nav-in">
-    <div class="logo"><span class="logo-dot">◆</span> Startup Tracker</div>
+    <div class="logo"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--brand-on-dark)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z"></path><path d="M12 12 L21 7"></path><path d="M12 12 L3 7"></path><path d="M12 12 L12 22"></path></svg> Cubant</div>
   </div>
 </nav>
 
 <div class="hero">
   <div class="wrap">
     <div class="eyebrow">● Updated weekly</div>
-    <h1 class="big">Every round, measured against <em>the rounds like it</em>.</h1>
-    <p class="hero-sub">A continuously expanding record of North American venture funding. <b>Filter it, sort it, open any deal.</b></p>
+    <h1 class="big">Every round, read against its cohort with a <em>signal score</em>.</h1>
+    <p class="hero-sub">Venture funding across Canada, the US, and beyond. <b>Filter it, sort it, open any deal.</b></p>
     <p class="hero-date" id="heroDate">Venture activity</p>
     <div class="pills">
       <div class="pill"><div class="pill-n num" id="k-total">—</div><div class="pill-l" id="k-total-l">deals tracked</div></div>
@@ -493,8 +493,8 @@ function charts(d){
   Object.values(CH).forEach(c=>c&&c.destroy()); CH={};
 
   // ── Stages: vertical columns, reading left→right as a progression ──
-  const order=['Pre-Seed','Seed','Series A','Series B','Series C','Series D','Series E','Series F','Series G','Series H','Growth','Private Equity','Strategic','Acquisition','IPO','Fund','Other','Undisclosed'];
-  const short={'Pre-Seed':'Pre','Seed':'Seed','Series A':'A','Series B':'B','Series C':'C','Series D':'D','Series E':'E','Series F':'F','Series G':'G','IPO':'IPO','Fund':'Fund','Series H':'H','Growth':'Growth','Private Equity':'PE','Strategic':'Strategic','Acquisition':'Acq','Other':'Other','Undisclosed':'Undisclosed'};
+  const order=['Pre-Seed','Seed','Series A','Series B','Series C','Series D','Series E','Series F','Series G','Series H','Growth','Private Equity','Strategic','Debt','Bridge','Grant / Government','Reverse Takeover','Acquisition','IPO','Fund','Other','Undisclosed'];
+  const short={'Pre-Seed':'Pre','Seed':'Seed','Series A':'A','Series B':'B','Series C':'C','Series D':'D','Series E':'E','Series F':'F','Series G':'G','IPO':'IPO','Fund':'Fund','Series H':'H','Growth':'Growth','Private Equity':'PE','Strategic':'Strategic','Debt':'Debt','Bridge':'Bridge','Grant / Government':'Grant','Reverse Takeover':'RTO','Acquisition':'Acq','Other':'Other','Undisclosed':'Undisclosed'};
   const sm={}; d.forEach(x=>sm[x.stage]=(sm[x.stage]||0)+1);
   // The ladder is an ordered progression, so it gets the columns. Everything else is an
   // event type rather than a stage, so it sits beneath as a clickable strip.
@@ -656,7 +656,7 @@ function openM(i){
   document.getElementById('mName').textContent=d.name;
   document.getElementById('mDate').textContent=d.date+' · '+flag(d.region_group)+' '+d.region;
   const a=document.getElementById('mAmt'); a.textContent=fmt(d.amount_m); a.className='m-amt num'+(d.amount_m==null?' none':'');
-  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Market position '+d.score+'/100</b> — the average of the two signals below</div>':'')+(d.score_why?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'');
+  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Signal score '+d.score+'/100</b> — built from the two measures below</div>':'')+(d.score_why?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'');
   document.getElementById('mTags').innerHTML='<span class="tag t-type">'+esc(typeLabel(d.type))+'</span>'+
     (d.stage&&d.stage!=='Unknown'?'<span class="tag t-stage">'+esc(d.stage)+'</span>':'')+
     '<span class="tag">'+esc(d.sector_group||'—')+'</span>'+
@@ -699,7 +699,7 @@ function initDropdowns(){
   RAW.forEach(d=>{ if(d.sector_group)sc[d.sector_group]=(sc[d.sector_group]||0)+1; if(d.stage)st[d.stage]=(st[d.stage]||0)+1; });
   const a=document.getElementById('selSector');
   Object.keys(sc).sort((x,y)=>sc[y]-sc[x]).forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s+' ('+sc[s]+')'; a.appendChild(o); });
-  const order=['Pre-Seed','Seed','Series A','Series B','Series C','Series D','Series E','Series F','Series G','Series H','Growth','Private Equity','Strategic','Acquisition','IPO','Fund','Other','Undisclosed'];
+  const order=['Pre-Seed','Seed','Series A','Series B','Series C','Series D','Series E','Series F','Series G','Series H','Growth','Private Equity','Strategic','Debt','Bridge','Grant / Government','Reverse Takeover','Acquisition','IPO','Fund','Other','Undisclosed'];
   const b=document.getElementById('selStage');
   order.filter(s=>st[s]).forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s+' ('+st[s]+')'; b.appendChild(o); });
 }
