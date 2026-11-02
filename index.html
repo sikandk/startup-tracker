@@ -5,24 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cubant — Startup Activity Tracker</title>
 <meta name="description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#14161A">
-<link rel="canonical" href="https://cubant.com/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://cubant.com/">
-<meta property="og:site_name" content="Cubant">
-<meta property="og:title" content="Cubant — Startup Activity Tracker">
-<meta property="og:description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
-<meta property="og:image" content="https://cubant.com/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Cubant: every round, read against its cohort with a signal score.">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Cubant — Startup Activity Tracker">
-<meta name="twitter:description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
-<meta name="twitter:image" content="https://cubant.com/og-image.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@3.1.0/dist/chartjs-chart-treemap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -239,7 +221,7 @@
     <div class="eyebrow">● Updated weekly</div>
     <h1 class="big">Every round, read against its cohort with a <em>signal score</em>.</h1>
     <p class="hero-sub">Venture funding across Canada, the US, and beyond. <b>Filter it, sort it, open any deal.</b></p>
-    <p class="hero-date">Venture activity · Jan 02, 2025 – Oct 28, 2026<span style="opacity:.55"> · updated Nov 01, 2026</span></p>
+    <p class="hero-date">Venture activity · Jan 02, 2025 – Oct 28, 2026<span style="opacity:.55"> · updated Nov 02, 2026</span></p>
     <div class="pills">
       <div class="pill"><div class="pill-n num" id="k-total">—</div><div class="pill-l" id="k-total-l">deals tracked</div></div>
       <div class="pill"><div class="pill-n num" id="k-cap">—</div><div class="pill-l" id="k-cap-l">capital raised</div></div>
@@ -336,6 +318,7 @@
             <th>Sector</th>
             <th>Region</th>
             <th class="srt" data-s="amount_m" style="text-align:right">Amount</th>
+            <th class="srt" data-s="score" style="text-align:right">Signal</th>
           </tr></thead>
           <tbody id="tbody"></tbody>
         </table>
@@ -568,14 +551,14 @@ function cards(d){
 
 function table(d){
   const b=document.getElementById('tbody');
-  if(!d.length){ b.innerHTML='<tr><td colspan="7"><div class="empty"><h4>No deals match</h4><p>Try clearing a filter.</p></div></td></tr>'; return; }
+  if(!d.length){ b.innerHTML='<tr><td colspan="8"><div class="empty"><h4>No deals match</h4><p>Try clearing a filter.</p></div></td></tr>'; return; }
   b.innerHTML=d.map(x=>{
     const i=RAW.indexOf(x), cls=x.amount_m==null?'none':x.amount_m>10000?'mega':'';
     return '<tr onclick="openM('+i+')"><td class="t-dim num">'+esc(x.date)+'</td><td class="t-name">'+esc(x.name)+'</td>'+
       '<td><span class="tag t-type">'+esc(typeLabel(x.type))+'</span></td><td><span class="tag t-stage">'+esc(x.stage)+'</span></td>'+
       '<td style="color:var(--ink-2)">'+esc(x.sector_group)+'</td><td class="t-dim">'+flag(x.region_group)+' '+esc(x.region)+'</td>'+
-      '<td class="t-amt num '+cls+'">'+fmt(x.amount_m)+'</td></tr>';
-  }).join('');
+      '<td class="t-amt num '+cls+'">'+fmt(x.amount_m)+'</td>'+
+      '<td class="num" style="text-align:right">'+(x.score!=null?'<span class="score-pill '+(x.score>=70?'sc-hi':x.score>=40?'sc-mid':'sc-lo')+'">'+x.score+'</span>':'<span class="t-dim">—</span>')+'</td></tr>';  }).join('');
   document.querySelectorAll('thead th.srt').forEach(t=>{
     t.classList.remove('asc','desc');
     const m={date:'date',name:'name',amount_m:'amt'}[t.dataset.s];
@@ -641,7 +624,7 @@ document.querySelectorAll('thead th.srt').forEach(th=>th.onclick=()=>{
   const m={date:'date',name:'name',amount_m:'amt'}[th.dataset.s];
   if(!m)return;
   sortBy=(sortBy===m+'-desc')?m+'-asc':m+'-desc';
-  document.getElementById('selSort').value=['date-desc','date-asc','amt-desc','amt-asc','name-asc'].includes(sortBy)?sortBy:'date-desc';
+  document.getElementById('selSort').value=['date-desc','date-asc','amt-desc','amt-asc','name-asc','score-desc','score-asc']
   render();
 });
 
