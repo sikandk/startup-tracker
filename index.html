@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cubant — Startup Activity Tracker</title>
 <meta name="description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#14161A">
+<link rel="canonical" href="https://cubant.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cubant.com/">
+<meta property="og:site_name" content="Cubant">
+<meta property="og:title" content="Cubant — Startup Activity Tracker">
+<meta property="og:description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
+<meta property="og:image" content="https://cubant.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cubant: every round, read against its cohort with a signal score.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cubant — Startup Activity Tracker">
+<meta name="twitter:description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
+<meta name="twitter:image" content="https://cubant.com/og-image.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@3.1.0/dist/chartjs-chart-treemap.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -293,7 +311,7 @@
           <option value="amt-asc">Smallest round</option>
           <option value="name-asc">A → Z</option>
           <option value="score-desc">Highest score</option>
-          <option value="score-asc">Lowest score</option> score</option>
+          <option value="score-asc">Lowest score</option>
         </select>
         <div class="view-switch">
           <button class="active" data-view="cards">Cards</button>
@@ -318,7 +336,7 @@
             <th>Sector</th>
             <th>Region</th>
             <th class="srt" data-s="amount_m" style="text-align:right">Amount</th>
-            <th class="srt" data-s="score" style="text-align:right">Signal</th>
+            <th style="text-align:right">Signal</th>
           </tr></thead>
           <tbody id="tbody"></tbody>
         </table>
@@ -624,7 +642,7 @@ document.querySelectorAll('thead th.srt').forEach(th=>th.onclick=()=>{
   const m={date:'date',name:'name',amount_m:'amt'}[th.dataset.s];
   if(!m)return;
   sortBy=(sortBy===m+'-desc')?m+'-asc':m+'-desc';
-  document.getElementById('selSort').value=['date-desc','date-asc','amt-desc','amt-asc','name-asc','score-desc','score-asc']
+  document.getElementById('selSort').value=['date-desc','date-asc','amt-desc','amt-asc','name-asc','score-desc','score-asc'].includes(sortBy)?sortBy:'date-desc';
   render();
 });
 
