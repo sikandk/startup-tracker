@@ -311,7 +311,7 @@
           <option value="amt-asc">Smallest round</option>
           <option value="name-asc">A → Z</option>
           <option value="score-desc">Highest score</option>
-          <option value="score-asc">Lowest score</option> score</option>
+          <option value="score-asc">Lowest score</option>
         </select>
         <div class="view-switch">
           <button class="active" data-view="cards">Cards</button>
@@ -642,7 +642,7 @@ document.querySelectorAll('thead th.srt').forEach(th=>th.onclick=()=>{
   const m={date:'date',name:'name',amount_m:'amt'}[th.dataset.s];
   if(!m)return;
   sortBy=(sortBy===m+'-desc')?m+'-asc':m+'-desc';
-  document.getElementById('selSort').value=['date-desc','date-asc','amt-desc','amt-asc','name-asc','score-desc','score-asc']
+  document.getElementById('selSort').value=['date-desc','date-asc','amt-desc','amt-asc','name-asc','score-desc','score-asc'].includes(sortBy)?sortBy:'date-desc';
   render();
 });
 
