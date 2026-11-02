@@ -7,4 +7,5 @@ Live at https://sikandk.github.io/startup-tracker/
 - `index.html` + `styles.css`: the site (static, served by GitHub Pages)
 - `data/deals.json`: the deal records, the single source of truth (see `data/README.md`; CC BY 4.0)
 - `scripts/validate.py`: checks the data against `data/taxonomy.json`; runs on every push
+- `scripts/add_deals.py`: adds new deals (dealbot `pending.json` format) to `data/deals.json`, filling in IDs, stage, region and USD/CAD amounts
 - `scripts/migrate_v1.py`: one-off migration from the old page-embedded data, kept for the record
