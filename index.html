@@ -176,6 +176,8 @@
   .m-amt { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; color: var(--money); margin: 22px 0 4px; line-height: 1; }
   .m-amt.none { color: var(--ink-3); font-size: 24px; letter-spacing: -0.01em; }
   .m-raw { font-size: 12.5px; color: var(--ink-3); }
+  .m-why { margin: 5px 0 0; padding-left: 18px; }
+  .m-why li { margin-top: 3px; }
   .m-tags { display: flex; gap: 7px; flex-wrap: wrap; margin: 20px 0; }
   .m-f { margin-bottom: 18px; }
   .m-f label { font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; display: block; margin-bottom: 6px; }
@@ -608,7 +610,7 @@ function openM(i){
   document.getElementById('mName').textContent=d.name;
   document.getElementById('mDate').textContent=d.date+' · '+flag(d.region_group)+' '+d.region;
   const a=document.getElementById('mAmt'); a.textContent=fmt(d.amount_m); a.className='m-amt num'+(d.amount_m==null?' none':'');
-  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Signal score '+d.score+'/100</b> — built from the two measures below</div>':'')+(d.score_why?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'');
+  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Signal score '+d.score+'/100</b> — built from the two measures below</div>':'')+(d.score_why?(d.score_why.startsWith('not scored')?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'<ul class="m-why">'+d.score_why.split(/(?<=\.)\s+(?=[A-Z])/).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'):'');
   document.getElementById('mTags').innerHTML='<span class="tag t-type">'+esc(typeLabel(d.type))+'</span>'+
     (d.stage&&d.stage!=='Unknown'?'<span class="tag t-stage">'+esc(d.stage)+'</span>':'')+
     '<span class="tag">'+esc(d.sector_group||'—')+'</span>'+
