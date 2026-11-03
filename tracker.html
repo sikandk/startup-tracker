@@ -210,6 +210,8 @@
      read as one product. Body below stays light. */
   nav { background: rgba(20,22,26,.88); border-bottom: 1px solid var(--dark-line); }
   .logo { color: var(--on-dark); }
+  .nav-home { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--on-dark); text-decoration: none; padding: 8px 15px; border: 1px solid var(--dark-line); border-radius: 7px; }
+  .nav-home:hover { background: rgba(255,255,255,.08); }
   .hero { background: var(--dark); border-bottom: none; }
   .eyebrow { color: var(--amber-on-dark); background: transparent;
              border: 1px solid var(--dark-line); border-radius: var(--r-pill); }
@@ -232,7 +234,8 @@
 
 <nav>
   <div class="nav-in">
-    <div class="logo"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--brand-on-dark)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z"></path><path d="M12 12 L21 7"></path><path d="M12 12 L3 7"></path><path d="M12 12 L12 22"></path></svg> Cubant</div>
+    <a href="/" class="logo" style="text-decoration:none"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--brand-on-dark)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z"></path><path d="M12 12 L21 7"></path><path d="M12 12 L3 7"></path><path d="M12 12 L12 22"></path></svg> Cubant</a>
+    <a href="/" class="nav-home" aria-label="Go to home page"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M3 11 L12 3 L21 11"></path><path d="M5 10 L5 20 L19 20 L19 10"></path></svg> Home</a>
   </div>
 </nav>
 
