@@ -20,7 +20,7 @@ A free, mostly self-running public record of North American venture activity, gr
 
 **Pipeline.** A daily GitHub Actions job reads BetaKit (RSS/WordPress API) and Crunchbase News (RSS, funding posts only, US raises of $50M or more), extracts with the Claude API (`claude-haiku-5-5`), and stops after 50 articles a day. Confident records are committed straight to `main`; uncertain ones go into a PR. If no new records arrive for 3 days, it opens an issue automatically. The bot only touches `data/`. Code work happens on `startup-tracker` and is merged into `main` by hand.
 
-**Hosting.** GitHub Pages from `main` (already live at sikandk.github.io/startup-tracker).
+**Hosting.** GitHub Pages from `main` on the custom domain cubant.com: landing page at `/` (`index.html`), tracker at `/tracker` (`tracker.html`).
 
 ## Owner setup
 

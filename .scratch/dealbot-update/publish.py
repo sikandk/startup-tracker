@@ -2,8 +2,8 @@ import subprocess, pathlib, sys
 from datetime import datetime
 
 REPO = pathlib.Path("/Users/sidkhetan/startup-tracker")
-# Only the data changes now. The page (index.html) reads data/deals.json
-# directly, so nothing is rebuilt and index.html is never touched here.
+# Only the data changes now. The tracker (tracker.html) reads data/deals.json
+# directly, so nothing is rebuilt and no HTML page is touched here.
 FILES = ["data/deals.json", "data/taxonomy.json", "data/fx_usdcad.csv"]
 
 
@@ -31,7 +31,7 @@ def publish():
         return
     run(["git", "push"], REPO)
     print("pushed — live in ~1 min at "
-          "https://sikandk.github.io/startup-tracker/")
+          "https://cubant.com/tracker")
 
 
 if __name__ == "__main__":

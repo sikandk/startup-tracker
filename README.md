@@ -2,9 +2,10 @@
 
 A continuously expanding record of North American venture activity: every Canadian deal plus US raises of $50M or more, from January 2025 onward.
 
-Live at https://sikandk.github.io/startup-tracker/
+Live at https://cubant.com/ (tracker at https://cubant.com/tracker)
 
-- `index.html` + `styles.css`: the site (static, served by GitHub Pages)
+- `index.html`: the Cubant landing page
+- `tracker.html` + `styles.css`: the tracker, which loads `data/deals.json` (static, served by GitHub Pages)
 - `data/deals.json`: the deal records, the single source of truth (see `data/README.md`; CC BY 4.0)
 - `scripts/validate.py`: checks the data against `data/taxonomy.json`; runs on every push
 - `scripts/add_deals.py`: adds new deals (dealbot `pending.json` format) to `data/deals.json`, filling in IDs, stage, region and USD/CAD amounts

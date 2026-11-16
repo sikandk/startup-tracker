@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cubant — Startup Activity Tracker</title>
+<meta name="description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#14161A">
+<link rel="canonical" href="https://cubant.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cubant.com/">
+<meta property="og:site_name" content="Cubant">
+<meta property="og:title" content="Cubant — Startup Activity Tracker">
+<meta property="og:description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
+<meta property="og:image" content="https://cubant.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cubant: every round, read against its cohort with a signal score.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cubant — Startup Activity Tracker">
+<meta name="twitter:description" content="Venture funding across Canada, the US, and beyond. Every round read against its cohort with a signal score.">
+<meta name="twitter:image" content="https://cubant.com/og-image.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-treemap@3.1.0/dist/chartjs-chart-treemap.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* tokens live in styles.css */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { font-family: var(--sans); background: var(--paper-2); color: var(--ink); line-height: 1.5; -webkit-font-smoothing: antialiased; font-feature-settings: "tnum" 1; }
+  .num { font-variant-numeric: tabular-nums; }
+  ::selection { background: var(--brand); color: #fff; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+  /* ── Nav ─────────────────────────────── */
+  nav { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+  .nav-in { display: flex; align-items: center; gap: 12px; max-width: 1280px; margin: 0 auto; padding: 14px 28px; }
+  .logo { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+  .logo svg { flex: none; }
+
+  /* ── Hero ────────────────────────────── */
+  .hero { background: var(--paper); border-bottom: 1px solid var(--line); padding: 64px 0 0; position: relative; overflow: hidden; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; letter-spacing: .4px; text-transform: uppercase; color: var(--brand); background: var(--brand-soft); padding: 6px 13px; border-radius: 4px; margin-bottom: 22px; }
+  h1.big { font-size: clamp(34px, 5.4vw, 60px); line-height: 1.04; letter-spacing: -0.03em; font-weight: 700; max-width: 15ch; position: relative; z-index: 1; }
+  h1.big em { font-style: normal; color: var(--brand); }
+  .hero-sub { margin-top: 20px; font-size: 17px; color: var(--ink-2); max-width: 54ch; line-height: 1.6; position: relative; z-index: 1; }
+  .hero-sub b { color: var(--ink); font-weight: 500; }
+  .hero-date { font-size: 12.5px; color: var(--ink-3); margin-top: 14px; position: relative; z-index: 1; }
+  .score-pill{display:inline-block;margin-left:10px;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:700;vertical-align:middle;font-variant-numeric:tabular-nums}
+  .sc-hi{background:rgba(45,160,100,.16);color:#2da064}
+  .sc-mid{background:rgba(140,140,150,.18);color:#8a8a92}
+  .sc-lo{background:rgba(200,120,90,.16);color:#c8785a}
+  .sc-na{background:rgba(140,140,150,.12);color:#9a9aa2;font-weight:600}
+
+  .pills { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 44px; padding-bottom: 40px; position: relative; z-index: 1; }
+  .pill { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px 22px; transition: all .22s cubic-bezier(.4,0,.2,1); }
+  .pill:hover { border-color: var(--brand); box-shadow: var(--shadow); }
+  .pill-n { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+  .pill:nth-child(1) .pill-n { color: var(--brand); }
+  .pill:nth-child(2) .pill-n { color: var(--money); }
+  .pill:nth-child(3) .pill-n { color: var(--amber); }
+  .pill:nth-child(4) .pill-n { color: var(--rose); }
+  .pill-l { font-size: 12.5px; color: var(--ink-3); margin-top: 9px; font-weight: 500; }
+
+  /* ── Filter bar ──────────────────────── */
+  .bar { position: sticky; top: 55px; z-index: 50; background: rgba(247,247,251,.93); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+  .bar-in { padding: 13px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .seg { display: inline-flex; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 3px; gap: 2px; }
+  .seg button { font-family: var(--sans); font-size: 12.5px; font-weight: 600; padding: 6px 13px; border-radius: 4px; border: none; background: transparent; color: var(--ink-2); cursor: pointer; transition: all .15s; white-space: nowrap; }
+  .seg button:hover { background: var(--paper-3); color: var(--ink); }
+  .seg button.active { background: var(--ink); color: #fff; }
+  select.sel, input.search { font-family: var(--sans); border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-size: 12.5px; font-weight: 500; outline: none; border-radius: 4px; }
+  select.sel { padding: 8px 32px 8px 14px; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238b91a3' stroke-width='2.2'%3E%3Cpath d='M2 4.5l4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 13px center; }
+  input.search { flex: 1; min-width: 170px; max-width: 290px; margin-left: auto; padding: 8px 15px 8px 34px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%238b91a3' stroke-width='2.2'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cpath d='M9.6 9.6L13 13'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 13px center; }
+  select.sel:focus, input.search:focus { border-color: var(--brand); }
+  .chips { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .chips:not(:empty) { padding-bottom: 12px; }
+  .chip { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 600; padding: 5px 9px 5px 12px; border-radius: 4px; background: var(--brand); color: #fff; }
+  .chip span { cursor: pointer; opacity: .75; font-size: 14px; line-height: 1; }
+  .chip span:hover { opacity: 1; }
+  .clear { font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--ink-3); background: none; border: none; cursor: pointer; text-decoration: underline; }
+  .clear:hover { color: var(--ink); }
+
+  /* ── Sections ────────────────────────── */
+  section { padding: 44px 0; }
+  .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
+  .sec-head h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+  .sec-head p { font-size: 13.5px; color: var(--ink-3); margin-top: 3px; }
+  .count-badge { font-size: 13px; font-weight: 500; color: var(--brand); background: var(--brand-soft); padding: 6px 13px; border-radius: 4px; white-space: nowrap; }
+
+  .charts { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; }
+  .card.full { grid-column: 1 / -1; }
+  .card-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .card-h h3 { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .card-h .note { font-size: 11.5px; color: var(--ink-3); font-weight: 500; }
+  .stage-strip { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .strip-lbl { width: 100%; font-size: 10.5px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; margin-bottom: 2px; }
+  .strip-pill { font-family: var(--sans); font-size: 11.5px; font-weight: 600; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--line); background: var(--paper); color: var(--ink-2); cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; }
+  .strip-pill:hover { border-color: var(--brand); color: var(--brand); }
+  .strip-pill b { font-weight: 600; color: var(--ink); }
+  .strip-pill.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .strip-pill.on b { color: #fff; }
+  .tog { font-size: 11.5px; color: var(--ink-2); display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; font-weight: 500; }
+  .tog input { accent-color: var(--brand); cursor: pointer; }
+
+  /* ── Deal cards ──────────────────────── */
+  .view-switch { display: inline-flex; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 3px; }
+  .view-switch button { font-family: var(--sans); font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 4px; border: none; background: transparent; color: var(--ink-2); cursor: pointer; transition: all .15s; }
+  .view-switch button.active { background: var(--brand); color: #fff; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(268px, 1fr)); gap: 16px; }
+  .deal { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; cursor: pointer; transition: all .2s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
+  .deal:hover { border-color: var(--brand); box-shadow: var(--shadow); }
+  .deal-top { display: flex; align-items: center; gap: 11px; margin-bottom: 15px; }
+  .avatar { width: 38px; height: 38px; border-radius: 4px; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #fff; flex-shrink: 0; letter-spacing: -0.01em; }
+  .deal-id { min-width: 0; flex: 1; }
+  .deal-name { font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .deal-date { font-size: 11.5px; color: var(--ink-3); margin-top: 1px; }
+  .deal-amt { font-size: 27px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; color: var(--money); }
+  .deal-amt.none { color: var(--ink-3); font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+  .deal-amt.mega { color: var(--amber); }
+  .deal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 13px 0 12px; }
+  .tag { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 4px; background: var(--paper-3); color: var(--ink-2); white-space: nowrap; }
+  .tag.t-stage { background: var(--brand-soft); color: var(--brand); }
+  .tag.t-type { background: var(--ink); color: #fff; }
+  .deal-note { font-size: 12.5px; color: var(--ink-2); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-top: auto; }
+  .deal-foot { margin-top: 13px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 11.5px; color: var(--ink-3); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .deal-src { color: var(--brand); font-weight: 600; }
+
+  .more-wrap { text-align: center; margin-top: 30px; }
+  .more-btn { font-family: var(--sans); font-size: 13.5px; font-weight: 500; padding: 13px 30px; border-radius: 4px; border: 1px solid var(--line-2); background: var(--paper); color: var(--ink); cursor: pointer; transition: all .18s; }
+  .more-btn:hover { border-color: var(--brand); color: var(--brand); box-shadow: var(--shadow-sm); }
+
+  /* ── Compact table view ──────────────── */
+  .tbl-wrap { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+  .tbl-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 760px; }
+  thead th { text-align: left; padding: 13px 16px; font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; border-bottom: 1px solid var(--line); white-space: nowrap; cursor: pointer; user-select: none; }
+  thead th:hover { color: var(--ink); }
+  thead th.srt::after { content: '↕'; opacity: .35; margin-left: 5px; font-size: 10px; }
+  thead th.asc::after { content: '↑'; opacity: 1; color: var(--brand); }
+  thead th.desc::after { content: '↓'; opacity: 1; color: var(--brand); }
+  tbody tr { border-bottom: 1px solid var(--paper-3); cursor: pointer; transition: background .1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--brand-softer); }
+  tbody td { padding: 12px 16px; }
+  .t-name { font-weight: 500; }
+  .t-dim { color: var(--ink-3); font-size: 12px; white-space: nowrap; }
+  .t-amt { font-weight: 600; color: var(--money); text-align: right; white-space: nowrap; }
+  .t-amt.none { color: var(--ink-3); font-weight: 400; }
+  .t-amt.mega { color: var(--amber); }
+
+  .empty { padding: 70px 20px; text-align: center; }
+  .empty h4 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .empty p { font-size: 13.5px; color: var(--ink-3); }
+
+  /* ── Modal ───────────────────────────── */
+  .ov { display: none; position: fixed; inset: 0; background: rgba(13,14,20,.5); backdrop-filter: blur(5px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+  .ov.open { display: flex; }
+  .modal { background: var(--paper); border-radius: 4px; padding: 30px; max-width: 580px; width: 100%; max-height: 86vh; overflow-y: auto; box-shadow: var(--shadow-lg); animation: mIn .2s cubic-bezier(.4,0,.2,1); }
+  @keyframes mIn { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+  .m-top { display: flex; align-items: flex-start; gap: 14px; }
+  .m-top .avatar { width: 50px; height: 50px; border-radius: 4px; font-size: 19px; }
+  .m-id { flex: 1; min-width: 0; }
+  .m-id h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; }
+  .m-id .d { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
+  .m-x { font-family: var(--sans); background: var(--paper-3); border: none; color: var(--ink-2); width: 32px; height: 32px; border-radius: 4px; font-size: 19px; cursor: pointer; line-height: 1; display: grid; place-items: center; flex-shrink: 0; transition: all .15s; }
+  .m-x:hover { background: var(--line); color: var(--ink); }
+  .m-amt { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; color: var(--money); margin: 22px 0 4px; line-height: 1; }
+  .m-amt.none { color: var(--ink-3); font-size: 24px; letter-spacing: -0.01em; }
+  .m-raw { font-size: 12.5px; color: var(--ink-3); }
+  .m-why { margin: 5px 0 0; padding-left: 18px; }
+  .m-why li { margin-top: 3px; }
+  .m-tags { display: flex; gap: 7px; flex-wrap: wrap; margin: 20px 0; }
+  .m-f { margin-bottom: 18px; }
+  .m-f label { font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; display: block; margin-bottom: 6px; }
+  .m-f p { font-size: 14px; line-height: 1.68; color: var(--ink-2); }
+  .m-f a { display: inline-flex; align-items: center; gap: 6px; color: var(--brand); font-size: 13px; font-weight: 500; text-decoration: none; background: var(--brand-soft); padding: 9px 15px; border-radius: 4px; }
+  .m-f a:hover { background: var(--brand); color: #fff; }
+
+  footer { background: var(--paper); border-top: 1px solid var(--line); padding: 36px 0; text-align: center; font-size: 12.5px; color: var(--ink-3); line-height: 1.7; }
+
+  /* ── Responsive ──────────────────────── */
+  @media (max-width: 900px) {
+    .pills { grid-template-columns: repeat(2,1fr); }
+    .charts { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    .wrap, .nav-in { padding-left: 18px; padding-right: 18px; }
+    .hero { padding-top: 44px; }
+    h1.big { letter-spacing: -0.02em; }
+    .hero-sub { font-size: 15.5px; }
+    .pill-n { font-size: 31px; }
+    .bar { top: 54px; }
+    input.search { max-width: none; margin-left: 0; width: 100%; }
+    .gallery { grid-template-columns: 1fr; }
+    section { padding: 34px 0; }
+    .sec-head h2 { font-size: 20px; }
+  }
+
+  /* ── Dark band: nav + hero ───────────── */
+  /* Matches the landing page's dark header so the two pages
+     read as one product. Body below stays light. */
+  nav { background: rgba(20,22,26,.88); border-bottom: 1px solid var(--dark-line); }
+  .logo { color: var(--on-dark); }
+  .nav-home { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--on-dark); text-decoration: none; padding: 8px 15px; border: 1px solid var(--dark-line); border-radius: 7px; }
+  .nav-home:hover { background: rgba(255,255,255,.08); }
+  .hero { background: var(--dark); border-bottom: none; }
+  .eyebrow { color: var(--amber-on-dark); background: transparent;
+             border: 1px solid var(--dark-line); border-radius: var(--r-pill); }
+  h1.big { color: var(--on-dark); }
+  h1.big em { color: var(--brand-on-dark); }
+  .hero-sub { color: var(--on-dark-2); }
+  .hero-sub b { color: var(--on-dark); }
+  .hero-date { color: var(--on-dark-3); }
+  .pill { background: var(--dark-card); border-color: var(--dark-line); }
+  .pill:hover { border-color: var(--dark-line-2); }
+  .pill-l { color: var(--on-dark-3); }
+  .pill:nth-child(1) .pill-n { color: var(--brand-on-dark); }
+  .pill:nth-child(2) .pill-n { color: var(--money-on-dark); }
+  .pill:nth-child(3) .pill-n { color: var(--amber-on-dark); }
+  .pill:nth-child(4) .pill-n { color: var(--rose-on-dark); }
+  .mono, .num { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a href="/" class="logo" style="text-decoration:none"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--brand-on-dark)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z"></path><path d="M12 12 L21 7"></path><path d="M12 12 L3 7"></path><path d="M12 12 L12 22"></path></svg> Cubant</a>
+    <a href="/" class="nav-home" aria-label="Go to home page"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M3 11 L12 3 L21 11"></path><path d="M5 10 L5 20 L19 20 L19 10"></path></svg> Home</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">● Updated weekly</div>
+    <h1 class="big">Every round, read against its cohort with a <em>signal score</em>.</h1>
+    <p class="hero-sub">Venture funding across Canada, the US, and beyond. <b>Filter it, sort it, open any deal.</b></p>
+    <p class="hero-date" id="heroDate">Venture activity</p>
+    <div class="pills">
+      <div class="pill"><div class="pill-n num" id="k-total">—</div><div class="pill-l" id="k-total-l">deals tracked</div></div>
+      <div class="pill"><div class="pill-n num" id="k-cap">—</div><div class="pill-l" id="k-cap-l">capital raised</div></div>
+      <div class="pill"><div class="pill-n num" id="k-sec">—</div><div class="pill-l">sectors covered</div></div>
+      <div class="pill"><div class="pill-n num" id="k-geo">—</div><div class="pill-l" id="k-geo-l">—</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="bar-in">
+      <div class="seg" data-f="type">
+        <button class="active" data-v="all">All</button>
+        <button data-v="raise">Raises</button>
+        <button data-v="fund">Funds</button>
+        <button data-v="ma">M&amp;A</button>
+        <button data-v="ipo">IPO</button>
+      </div>
+      <div class="seg" data-f="region">
+        <button class="active" data-v="all">Everywhere</button>
+        <button data-v="Canada">🇨🇦</button>
+        <button data-v="USA">🇺🇸</button>
+        <button data-v="International">🌐</button>
+      </div>
+      <select class="sel" id="selSector"><option value="all">All sectors</option></select>
+      <select class="sel" id="selStage"><option value="all">All stages</option></select>
+      <input class="search" type="text" id="search" placeholder="Search companies…">
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="sec-head">
+      <div><h2>The shape of the market</h2><p>Click any bar to filter everything below</p></div>
+    </div>
+    <div class="charts">
+      <div class="card">
+        <div class="card-h"><h3>Round stages</h3><span class="note">the funding ladder</span></div>
+        <canvas id="cStage" height="185"></canvas>
+        <div class="stage-strip" id="stageStrip"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Top sectors</h3><span class="note">box size = deal count</span></div>
+        <canvas id="cSector" height="260"></canvas>
+      </div>
+      <div class="card full">
+        <div class="card-h">
+          <div><h3>Capital raised by sector</h3><span class="note" id="capNote"></span></div>
+          <label class="tog"><input type="checkbox" id="togOut" checked> Hide mega-rounds (&gt;$10B)</label>
+        </div>
+        <canvas id="cCapital" height="150"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:8px">
+    <div class="sec-head">
+      <div><h2>Every deal</h2><p id="dealSub">—</p></div>
+      <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+        <span class="count-badge" id="countBadge">—</span>
+        <select class="sel" id="selSort">
+          <option value="date-desc">Newest first</option>
+          <option value="date-asc">Oldest first</option>
+          <option value="amt-desc">Largest round</option>
+          <option value="amt-asc">Smallest round</option>
+          <option value="name-asc">A → Z</option>
+          <option value="score-desc">Highest score</option>
+          <option value="score-asc">Lowest score</option>
+        </select>
+        <div class="view-switch">
+          <button class="active" data-view="cards">Cards</button>
+          <button data-view="table">Table</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="galleryView">
+      <div class="gallery" id="gallery"></div>
+      <div class="more-wrap" id="moreWrap"><button class="more-btn" id="moreBtn">Load more deals</button></div>
+    </div>
+
+    <div id="tableView" style="display:none">
+      <div class="tbl-wrap"><div class="tbl-scroll">
+        <table>
+          <thead><tr>
+            <th class="srt" data-s="date">Date</th>
+            <th class="srt" data-s="name">Company</th>
+            <th>Type</th>
+            <th>Stage</th>
+            <th>Sector</th>
+            <th>Region</th>
+            <th class="srt" data-s="amount_m" style="text-align:right">Amount</th>
+            <th style="text-align:right">Signal</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div></div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    Built and maintained alongside the overview page.<br>
+    Compiled from public reporting. Nothing paywalled or login-gated.
+  </div>
+</footer>
+
+<div class="ov" id="ov">
+  <div class="modal">
+    <div class="m-top">
+      <div class="avatar" id="mAv"></div>
+      <div class="m-id"><h2 id="mName"></h2><div class="d" id="mDate"></div></div>
+      <button class="m-x" id="mX">×</button>
+    </div>
+    <div class="m-amt num" id="mAmt"></div>
+    <div class="m-raw" id="mRaw"></div>
+    <div class="m-tags" id="mTags"></div>
+    <div class="m-f"><label>What they do</label><p id="mNote"></p></div>
+    <div class="m-f" id="mSrcF"><label>Source</label><a id="mSrc" href="#" target="_blank" rel="noopener"></a></div>
+  </div>
+</div>
+
+<script>
+let RAW = [];
+
+const F = { type:'all', region:'all', sector:'all', stage:'all', q:'' };
+let sortBy = 'date-desc', view = 'cards', shown = 24;
+const PAGE = 24;
+
+// ── helpers ──────────────────────────────────────────────
+const TYPE_LABEL = {raise:'Raise', ma:'M&A', fund:'Fund', ipo:'IPO'};
+function fmt(m){ if(m==null)return'Undisclosed'; if(m>=1000)return'$'+(m/1000).toFixed(m%1000===0?0:1)+'B'; if(m>=1)return'$'+Math.round(m)+'M'; return'$'+m+'M'; }
+function typeLabel(t){ return TYPE_LABEL[t]||t; }
+function flag(g){ return g==='Canada'?'🇨🇦':g==='USA'?'🇺🇸':g==='International'?'🌐':''; }
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+
+// ── data ─────────────────────────────────────────────────
+// data/deals.json is the source of truth. A few display fields are derived here.
+const REGION_GROUP = c => c==='CA'?'Canada':c==='US'?'USA':c?'International':'Unknown';
+function prepare(rows){
+  rows.forEach(d=>{
+    d.amount_m = d.amount_usd_m;
+    d.source = d.sources && d.sources[0] || null;
+    d.region_group = REGION_GROUP(d.country);
+  });
+  score(rows);
+  return rows;
+}
+
+// ── market-position score ────────────────────────────────
+// Average of two signals, recalculated on every load so it reflects the latest data:
+//  size     – share of same-stage raises this round is larger than (needs 15+ to compare)
+//  momentum – the sector's share of raises in the 90 days before the deal vs the 90 days before that
+const LATE = ['Series D','Series E','Series F','Series G','Series H','Growth'];
+const cohort = s => (s==='Pre-Seed'||s==='Seed')?'Seed':LATE.includes(s)?'Late':s;
+const DAY = 864e5;
+function score(rows){
+  const raises = rows.filter(d=>d.type==='raise');
+  const pops = {};
+  raises.forEach(d=>{ if(d.amount_usd_m) (pops[cohort(d.stage)] ||= []).push(d.amount_usd_m); });
+  Object.values(pops).forEach(p=>p.sort((a,b)=>a-b));
+  const t = d => new Date(d.date).getTime();
+
+  rows.forEach(d=>{
+    d.score=null;
+    if(d.type!=='raise'){ d.score_conf='n/a'; d.score_why='Not scored: only startup raises are scored.'; return; }
+    if(d.stage==='Debt'){ d.score_conf='n/a'; d.score_why='Not scored: debt financing.'; return; }
+    const parts=[], why=[];
+
+    const pop = pops[cohort(d.stage)] || [];
+    if(!d.amount_usd_m) why.push('No size comparison: amount undisclosed.');
+    else if(pop.length<15) why.push('No size comparison: only '+pop.length+' '+cohort(d.stage)+' rounds tracked.');
+    else {
+      const pct = Math.round(100*pop.filter(v=>v<d.amount_usd_m).length/pop.length);
+      parts.push(pct);
+      why.push('Larger than '+pct+'% of the '+pop.length+' '+cohort(d.stage)+' rounds tracked on Cubant (median '+fmt(pop[Math.floor(pop.length/2)])+').');
+    }
+
+    const end=t(d), mid=end-90*DAY, start=end-180*DAY;
+    let rs=0, ra=0, ps=0, pa=0;
+    raises.forEach(x=>{ const v=t(x);
+      if(v>mid&&v<=end){ ra++; if(x.sector_group===d.sector_group) rs++; }
+      else if(v>start&&v<=mid){ pa++; if(x.sector_group===d.sector_group) ps++; } });
+    if(rs+ps<6||!pa||!ra||!ps) why.push('No momentum read: too few '+d.sector_group+' raises in the prior six months.');
+    else {
+      const r1=rs/ra, r0=ps/pa, ratio=r1/r0;
+      parts.push(Math.max(0,Math.min(100,Math.round((ratio-0.4)/1.2*100))));
+      why.push(d.sector_group+' made up '+Math.round(r1*100)+'% of raises in the 90 days before this deal, '+
+        (ratio>=1.05?'up from ':ratio<=0.95?'down from ':'about level with ')+Math.round(r0*100)+'% the quarter before.');
+    }
+
+    if(parts.length===2){ d.score=Math.round((parts[0]+parts[1])/2); d.score_conf='medium'; }
+    else if(parts.length===1){ d.score=parts[0]; d.score_conf='partial'; why.push('Single signal only, so not comparable with full scores.'); }
+    else d.score_conf='none';
+    d.score_why=why.join(' ');
+  });
+}
+
+function heroDate(){
+  const ds=RAW.map(d=>d.date).sort(), f=s=>new Date(s+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'});
+  if(ds.length) document.getElementById('heroDate').textContent='Venture activity · '+f(ds[0])+' – '+f(ds[ds.length-1]);
+}
+
+// Compact sector names so treemap boxes can show them in full.
+const SHORT_SECTOR = {'AI & Infrastructure':'AI & Infra','Enterprise Software':'Enterprise SW','Semiconductors & Quantum':'Semis','Defence & Aerospace':'Defence & Aero','Consumer & Commerce':'Consumer','Robotics & Industrial':'Robotics','HR, Legal & GovTech':'HR & Legal','PropTech & Construction':'PropTech','Climate & Energy':'Climate','FinTech & Crypto':'FinTech','Developer Tools':'Dev Tools','Cybersecurity':'Cyber'};
+const shortSec = s => SHORT_SECTOR[s] || s;
+
+const AV = ['#1F5C8B','#2C6E57','#9C5223','#7A4A8C','#46607A','#8C5A3C','#3F6B6B','#8A4A5C','#5B6340','#4A5568'];
+function avColor(s){ let h=0; for(let i=0;i<(s||'').length;i++) h=(h*31+s.charCodeAt(i))|0; return AV[Math.abs(h)%AV.length]; }
+function initials(n){ const p=(n||'').replace(/[^\w\s+]/g,'').trim().split(/\s+/); return ((p[0]||'?')[0]+(p[1]?p[1][0]:'')).toUpperCase(); }
+
+function filtered(){
+  return RAW.filter(d=>{
+    if(F.type!=='all'&&d.type!==F.type)return false;
+    if(F.region!=='all'&&d.region_group!==F.region)return false;
+    if(F.sector!=='all'&&d.sector_group!==F.sector)return false;
+    if(F.stage!=='all'&&d.stage!==F.stage)return false;
+    if(F.q){ const q=F.q.toLowerCase();
+      if(!((d.name||'').toLowerCase().includes(q)||(d.sector||'').toLowerCase().includes(q)||(d.region||'').toLowerCase().includes(q)||(d.sector_group||'').toLowerCase().includes(q)||(d.note||'').toLowerCase().includes(q)))return false; }
+    return true;
+  });
+}
+function sortData(a){
+  const x=[...a];
+  if(sortBy==='date-desc')x.sort((p,q)=>q.date.localeCompare(p.date));
+  else if(sortBy==='date-asc')x.sort((p,q)=>p.date.localeCompare(q.date));
+  else if(sortBy==='amt-desc')x.sort((p,q)=>(q.amount_m??-1)-(p.amount_m??-1));
+  else if(sortBy==='amt-asc')x.sort((p,q)=>(p.amount_m??1e9)-(q.amount_m??1e9));
+  else if(sortBy==='name-asc')x.sort((p,q)=>p.name.localeCompare(q.name));
+  else if(sortBy==='score-desc')x.sort((p,q)=>(q.score??-1)-(p.score??-1));
+  else if(sortBy==='score-asc')x.sort((p,q)=>(p.score??999)-(q.score??999));
+  return x;
+}
+
+// ── stats ────────────────────────────────────────────────
+function stats(d){
+  document.getElementById('k-total').textContent=d.length;
+  const dates=d.map(x=>x.date).filter(Boolean).sort();
+  document.getElementById('k-total-l').textContent = dates.length>1
+    ? 'deals · '+(Math.ceil((new Date(dates[dates.length-1])-new Date(dates[0]))/6048e5)+1)+' weeks' : 'deals tracked';
+  const r=d.filter(x=>x.type==='raise');
+  const cap=r.reduce((s,x)=>s+(x.amount_m||0),0);
+  document.getElementById('k-cap').textContent = cap>=1000?'$'+(cap/1000).toFixed(1)+'B':'$'+Math.round(cap)+'M';
+  const amts=r.map(x=>x.amount_m).filter(v=>v!=null).sort((a,b)=>a-b);
+  const med=amts.length?amts[Math.floor(amts.length/2)]:null;
+  const medTxt=med==null?'':' · median '+(med>=1000?'$'+(med/1000).toFixed(1)+'B':'$'+(med<10?med.toFixed(1):Math.round(med))+'M');
+  document.getElementById('k-cap-l').textContent='across '+r.length+' raises'+medTxt;
+  document.getElementById('k-sec').textContent=new Set(d.map(x=>x.sector_group).filter(s=>s&&s!=='Unknown')).size;
+  const g={}; d.forEach(x=>g[x.region_group]=(g[x.region_group]||0)+1);
+  const t=Object.entries(g).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('k-geo').textContent=t?Math.round(t[1]/d.length*100)+'%':'—';
+  document.getElementById('k-geo-l').textContent=t?'in '+(t[0]==='USA'?'the US':t[0]):'—';
+}
+
+// ── charts ───────────────────────────────────────────────
+const TICK={color:'#5E636E',font:{size:11.5,family:'-apple-system, sans-serif',weight:'500'}};
+const GRID={color:'#F3F3EF'};
+const BASE={responsive:true,maintainAspectRatio:true,animation:{duration:320},
+  plugins:{legend:{display:false},tooltip:{backgroundColor:'#14161A',padding:11,cornerRadius:10,titleFont:{size:12.5},bodyFont:{size:12},displayColors:false}}};
+let CH={};
+function clickFilter(dim,labels){ return (e,els)=>{ if(!els.length)return; const v=labels[els[0].index]; F[dim]=F[dim]===v?'all':v; shown=PAGE; sync(); render(); }; }
+
+function charts(d){
+  Object.values(CH).forEach(c=>c&&c.destroy()); CH={};
+
+  // ── Stages: vertical columns, reading left→right as a progression ──
+  const order=['Pre-Seed','Seed','Series A','Series B','Series C','Series D','Series E','Series F','Series G','Series H','Growth','Private Equity','Strategic','Debt','Bridge','Grant / Government','Reverse Takeover','Acquisition','IPO','Fund','Other','Undisclosed'];
+  const short={'Pre-Seed':'Pre','Seed':'Seed','Series A':'A','Series B':'B','Series C':'C','Series D':'D','Series E':'E','Series F':'F','Series G':'G','IPO':'IPO','Fund':'Fund','Series H':'H','Growth':'Growth','Private Equity':'PE','Strategic':'Strategic','Debt':'Debt','Bridge':'Bridge','Grant / Government':'Grant','Reverse Takeover':'RTO','Acquisition':'Acq','Other':'Other','Undisclosed':'Undisclosed'};
+  const sm={}; d.forEach(x=>sm[x.stage]=(sm[x.stage]||0)+1);
+  // The ladder is an ordered progression, so it gets the columns. Everything else is an
+  // event type rather than a stage, so it sits beneath as a clickable strip.
+  const LADDER=['Pre-Seed','Seed','Series A','Series B','Series C','Series D','Series E','Series F','Series G','Series H'];
+  const sl=LADDER.filter(s=>sm[s]);
+  CH.stage=new Chart(document.getElementById('cStage'),{type:'bar',
+    data:{labels:sl.map(s=>short[s]||s),datasets:[{data:sl.map(s=>sm[s]),backgroundColor:sl.map(s=>F.stage===s?'#14161A':'#1F5C8B'),borderRadius:6,borderSkipped:false,maxBarThickness:34}]},
+    options:{...BASE,onClick:clickFilter('stage',sl),
+      plugins:{...BASE.plugins,tooltip:{...BASE.plugins.tooltip,callbacks:{title:c=>sl[c[0].dataIndex],label:c=>' '+c.raw+' deals'}}},
+      scales:{x:{grid:{display:false},border:{display:false},ticks:{...TICK,autoSkip:false}},y:{grid:GRID,border:{display:false},ticks:{...TICK,precision:0},beginAtZero:true}}}});
+
+  const evts=order.filter(s=>!LADDER.includes(s)&&sm[s]).sort((a,b)=>sm[b]-sm[a]);
+  document.getElementById('stageStrip').innerHTML=evts.length
+    ? '<div class="strip-lbl">Other event types</div>'+evts.map(s=>
+        '<button class="strip-pill'+(F.stage===s?' on':'')+'" onclick="pickStage(\''+s.replace(/'/g,"\\'")+'\')">'+
+        s+'<b>'+sm[s]+'</b></button>').join('')
+    : '';
+
+  // ── Sectors: treemap, rectangle area = deal count ──
+  const cm={}; d.forEach(x=>{ if(x.sector_group&&x.sector_group!=='Unknown')cm[x.sector_group]=(cm[x.sector_group]||0)+1; });
+  const cs=Object.entries(cm).sort((a,b)=>b[1]-a[1]).slice(0,10), cl=cs.map(e=>e[0]);
+  const maxC=cs.length?cs[0][1]:1;
+  // Treemap comes from a CDN plugin; fall back to bars if it didn't load.
+  const hasTreemap=(()=>{ try{ Chart.registry.getController('treemap'); return true; }catch(e){ return false; } })();
+  if(!hasTreemap){
+    CH.sector=new Chart(document.getElementById('cSector'),{type:'bar',
+      data:{labels:cl,datasets:[{data:cs.map(e=>e[1]),backgroundColor:cl.map(s=>F.sector===s?'#14161A':'#2C6E57'),borderRadius:6,borderSkipped:false,maxBarThickness:26}]},
+      options:{...BASE,indexAxis:'y',onClick:clickFilter('sector',cl),
+        scales:{x:{grid:GRID,border:{display:false},ticks:{...TICK,precision:0},beginAtZero:true},y:{grid:{display:false},border:{display:false},ticks:{...TICK,font:{size:11,weight:'500'}}}}}});
+  } else
+  CH.sector=new Chart(document.getElementById('cSector'),{type:'treemap',
+    data:{datasets:[{
+      tree:cs.map(e=>({s:e[0],v:e[1]})), key:'v', groups:['s'], spacing:2, borderWidth:0, borderRadius:5,
+      captions:{display:false},
+      backgroundColor:c=>{ if(c.type!=='data')return 'transparent'; const o=c.raw&&c.raw._data; const s=o&&o.s;
+        if(F.sector===s)return '#14161A';
+        const t=o?o.v/maxC:0; return 'rgba(0,168,107,'+(0.3+t*0.7).toFixed(2)+')'; },
+      labels:{display:true,color:'#fff',font:{size:11,weight:'700'},position:'top',padding:6,
+        // Boxes vary a lot in size, so truncate to fit rather than letting text clip.
+        formatter:c=>{ const o=c.raw&&c.raw._data; if(!o)return'';
+          const w=c.raw.w||0, h=c.raw.h||0;
+          if(w<42||h<26)return'';
+          const max=Math.floor((w-10)/6.1);
+          let n=shortSec(o.s); if(n.length>max) n=n.slice(0,Math.max(3,max-1)).trim()+'…';
+          return h>=44?[n,o.v+' deals']:[n]; }}
+    }]},
+    options:{...BASE,
+      onClick:(e,els)=>{ if(!els.length)return; const o=els[0].element&&els[0].element.$context&&els[0].element.$context.raw&&els[0].element.$context.raw._data;
+        if(!o||!o.s)return; F.sector=F.sector===o.s?'all':o.s; shown=PAGE; sync(); render(); },
+      plugins:{...BASE.plugins,tooltip:{...BASE.plugins.tooltip,callbacks:{
+        title:()=>'', label:c=>{ const o=c.raw&&c.raw._data; return o?o.s+' · '+o.v+' deals':''; }}}}}});
+
+  // ── Capital: scatter — deal count (x) vs capital (y), one dot per sector ──
+  const hide=document.getElementById('togOut').checked;
+  const pm={},pc={}; let ex=0;
+  d.filter(x=>x.type==='raise').forEach(x=>{
+    if(!x.amount_m||!x.sector_group||x.sector_group==='Unknown')return;
+    if(hide&&x.amount_m>10000){ex++;return;}
+    pm[x.sector_group]=(pm[x.sector_group]||0)+x.amount_m;
+    pc[x.sector_group]=(pc[x.sector_group]||0)+1; });
+  const pl=Object.keys(pm).sort((a,b)=>pm[b]-pm[a]);
+  document.getElementById('capNote').textContent='startup raises only · each dot is a sector'+(hide&&ex?' · '+ex+' round'+(ex>1?'s':'')+' over $10B hidden':'');
+  const pts=pl.map(s=>({x:pc[s],y:Math.round(pm[s]),s:s}));
+  CH.cap=new Chart(document.getElementById('cCapital'),{type:'scatter',
+    data:{datasets:[{data:pts,
+      backgroundColor:pts.map(p=>F.sector===p.s?'#14161A':'rgba(245,158,11,.85)'),
+      borderColor:'#fff',borderWidth:2,
+      pointRadius:pts.map(p=>F.sector===p.s?11:9),pointHoverRadius:13}]},
+    options:{...BASE,onClick:(e,els)=>{ if(!els.length)return; const s=pts[els[0].index].s; F.sector=F.sector===s?'all':s; shown=PAGE; sync(); render(); },
+      layout:{padding:{top:14,right:92,bottom:4,left:4}},
+      plugins:{...BASE.plugins,tooltip:{...BASE.plugins.tooltip,callbacks:{
+        title:c=>pts[c[0].dataIndex].s, label:c=>' '+fmt(c.raw.y)+' across '+c.raw.x+' deals'}}},
+      scales:{
+        x:{grid:GRID,border:{display:false},beginAtZero:true,title:{display:true,text:'number of deals',color:'#5E636E',font:{size:11,weight:'600'}},ticks:{...TICK,precision:0}},
+        y:{grid:GRID,border:{display:false},beginAtZero:true,title:{display:true,text:'capital raised',color:'#5E636E',font:{size:11,weight:'600'}},ticks:{...TICK,callback:v=>fmt(v)}}}},
+    plugins:[{id:'ptLabels',afterDatasetsDraw(ch){
+      const{ctx}=ch, meta=ch.getDatasetMeta(0), area=ch.chartArea;
+      ctx.save(); ctx.font='600 10.5px -apple-system, sans-serif'; ctx.fillStyle='#43474F'; ctx.textBaseline='middle';
+      // Dots cluster in the low-left corner, so place each label in the first
+      // position that collides with nothing already drawn; skip it if all four do.
+      const drawn=[]; const hit=(a)=>drawn.some(b=>!(a.r<b.l||a.l>b.r||a.bo<b.t||a.t>b.bo));
+      // biggest sectors get first claim on space
+      meta.data.map((pt,i)=>({pt,p:pts[i]})).filter(o=>o.p)
+        .sort((a,b)=>b.p.y-a.p.y)
+        .forEach(({pt,p})=>{
+          const w=ctx.measureText(p.s).width, h=12;
+          const cand=[
+            {l:pt.x+13,       t:pt.y-h/2, align:'left',   x:pt.x+13, y:pt.y},
+            {l:pt.x-13-w,     t:pt.y-h/2, align:'right',  x:pt.x-13, y:pt.y},
+            {l:pt.x-w/2,      t:pt.y-15-h/2, align:'center', x:pt.x, y:pt.y-15},
+            {l:pt.x-w/2,      t:pt.y+15-h/2, align:'center', x:pt.x, y:pt.y+15}
+          ].map(c=>({...c,r:c.l+w,bo:c.t+h}));
+          const ok=cand.find(c=>c.l>=area.left-4&&c.r<=area.right+90&&c.t>=area.top-4&&c.bo<=area.bottom+4&&!hit(c));
+          if(!ok)return;
+          drawn.push(ok); ctx.textAlign=ok.align; ctx.fillText(p.s,ok.x,ok.y); });
+      ctx.restore(); }}]});
+}
+
+// ── deal cards ───────────────────────────────────────────
+function cards(d){
+  const g=document.getElementById('gallery');
+  if(!d.length){ g.innerHTML='<div class="empty" style="grid-column:1/-1"><h4>No deals match</h4><p>Try clearing a filter.</p></div>'; document.getElementById('moreWrap').style.display='none'; return; }
+  g.innerHTML=d.slice(0,shown).map(x=>{
+    const i=RAW.indexOf(x), c=avColor(x.sector_group||x.name);
+    const amtCls=x.amount_m==null?'none':x.amount_m>10000?'mega':'';
+    return '<div class="deal" onclick="openM('+i+')">'+
+      '<div class="deal-top"><div class="avatar" style="background:'+c+'">'+esc(initials(x.name))+'</div>'+
+      '<div class="deal-id"><div class="deal-name">'+esc(x.name)+'</div><div class="deal-date num">'+esc(x.date)+'</div></div></div>'+
+      '<div class="deal-amt num '+amtCls+'">'+fmt(x.amount_m)+(x.score!=null?'<span class="score-pill '+(x.score>=70?'sc-hi':x.score>=40?'sc-mid':'sc-lo')+'" title="'+esc(x.score_why)+'">'+x.score+'</span>':'<span class="score-pill sc-na" title="'+esc(x.score_why||'Not scored.')+'">—</span>')+'</div>'+      '<div class="deal-tags"><span class="tag t-type">'+esc(typeLabel(x.type))+'</span>'+
+      (x.stage&&x.stage!=='Unknown'?'<span class="tag t-stage">'+esc(x.stage)+'</span>':'')+
+      '<span class="tag">'+esc(x.sector_group||'—')+'</span></div>'+
+      '<div class="deal-note">'+esc(x.note||'No description recorded.')+'</div>'+
+      '<div class="deal-foot"><span>'+flag(x.region_group)+' '+esc(x.region)+'</span>'+(x.source?'<span class="deal-src">Source ↗</span>':'')+'</div>'+
+    '</div>';
+  }).join('');
+  const w=document.getElementById('moreWrap');
+  if(d.length>shown){ w.style.display=''; document.getElementById('moreBtn').textContent='Load '+Math.min(PAGE,d.length-shown)+' more · '+(d.length-shown)+' remaining'; }
+  else w.style.display='none';
+}
+
+function table(d){
+  const b=document.getElementById('tbody');
+  if(!d.length){ b.innerHTML='<tr><td colspan="8"><div class="empty"><h4>No deals match</h4><p>Try clearing a filter.</p></div></td></tr>'; return; }
+  b.innerHTML=d.map(x=>{
+    const i=RAW.indexOf(x), cls=x.amount_m==null?'none':x.amount_m>10000?'mega':'';
+    return '<tr onclick="openM('+i+')"><td class="t-dim num">'+esc(x.date)+'</td><td class="t-name">'+esc(x.name)+'</td>'+
+      '<td><span class="tag t-type">'+esc(typeLabel(x.type))+'</span></td><td><span class="tag t-stage">'+esc(x.stage)+'</span></td>'+
+      '<td style="color:var(--ink-2)">'+esc(x.sector_group)+'</td><td class="t-dim">'+flag(x.region_group)+' '+esc(x.region)+'</td>'+
+      '<td class="t-amt num '+cls+'">'+fmt(x.amount_m)+'</td>'+
+      '<td class="num" style="text-align:right">'+(x.score!=null?'<span class="score-pill '+(x.score>=70?'sc-hi':x.score>=40?'sc-mid':'sc-lo')+'">'+x.score+'</span>':'<span class="t-dim">—</span>')+'</td></tr>';  }).join('');
+  document.querySelectorAll('thead th.srt').forEach(t=>{
+    t.classList.remove('asc','desc');
+    const m={date:'date',name:'name',amount_m:'amt'}[t.dataset.s];
+    if(m && sortBy.startsWith(m+'-')) t.classList.add(sortBy.endsWith('-asc')?'asc':'desc');
+  });
+}
+
+// ── chips ────────────────────────────────────────────────
+function chips(){
+  const L={type:'Type',region:'Region',sector:'Sector',stage:'Stage'};
+  const a=Object.keys(L).filter(k=>F[k]!=='all').map(k=>'<span class="chip">'+esc(F[k])+'<span onclick="clr(\''+k+'\')">×</span></span>');
+  if(F.q)a.push('<span class="chip">“'+esc(F.q)+'”<span onclick="clrQ()">×</span></span>');
+  document.getElementById('chips').innerHTML=a.length?a.join('')+'<button class="clear" onclick="clrAll()">Reset all</button>':'';
+}
+function pickStage(s){ F.stage=F.stage===s?'all':s; shown=PAGE; sync(); render(); }
+function clr(k){ F[k]='all'; shown=PAGE; sync(); render(); }
+function clrQ(){ F.q=''; document.getElementById('search').value=''; shown=PAGE; render(); }
+function clrAll(){ Object.keys(F).forEach(k=>F[k]=k==='q'?'':'all'); document.getElementById('search').value=''; shown=PAGE; sync(); render(); }
+function sync(){
+  document.querySelectorAll('.seg').forEach(s=>s.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.v===F[s.dataset.f])));
+  document.getElementById('selSector').value=F.sector;
+  document.getElementById('selStage').value=F.stage;
+}
+
+// ── modal ────────────────────────────────────────────────
+function openM(i){
+  const d=RAW[i];
+  const av=document.getElementById('mAv'); av.textContent=initials(d.name); av.style.background=avColor(d.sector_group||d.name);
+  document.getElementById('mName').textContent=d.name;
+  document.getElementById('mDate').textContent=d.date+' · '+flag(d.region_group)+' '+d.region;
+  const a=document.getElementById('mAmt'); a.textContent=fmt(d.amount_m); a.className='m-amt num'+(d.amount_m==null?' none':'');
+  document.getElementById('mRaw').innerHTML=((d.roundsize&&d.amount_m!=null)?'<div>as recorded: '+esc(d.roundsize)+'</div>':'')+(d.score!=null?'<div style="margin-top:7px;color:var(--ink-1)"><b>Signal score '+d.score+'/100</b> — built from the two measures below</div>':'')+(d.score_why?(/^not scored/i.test(d.score_why)?'<div style="margin-top:5px">'+esc(d.score_why)+'</div>':'<ul class="m-why">'+d.score_why.split(/(?<=\.)\s+(?=[A-Z])/).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>'):'');
+  document.getElementById('mTags').innerHTML='<span class="tag t-type">'+esc(typeLabel(d.type))+'</span>'+
+    (d.stage&&d.stage!=='Unknown'?'<span class="tag t-stage">'+esc(d.stage)+'</span>':'')+
+    '<span class="tag">'+esc(d.sector_group||'—')+'</span>'+
+    (d.sector&&d.sector!=='Unknown'&&d.sector!==d.sector_group?'<span class="tag">'+esc(d.sector)+'</span>':'');
+  document.getElementById('mNote').textContent=d.note||'No description recorded.';
+  const s=document.getElementById('mSrc'), f=document.getElementById('mSrcF');
+  if(d.source){ s.href=d.source; try{ s.textContent='Read on '+new URL(d.source).hostname.replace('www.','')+' ↗'; }catch(e){ s.textContent='Read source ↗'; } f.style.display=''; }
+  else f.style.display='none';
+  document.getElementById('ov').classList.add('open');
+}
+document.getElementById('mX').onclick=()=>document.getElementById('ov').classList.remove('open');
+document.getElementById('ov').onclick=e=>{ if(e.target===e.currentTarget)e.currentTarget.classList.remove('open'); };
+document.addEventListener('keydown',e=>{ if(e.key==='Escape')document.getElementById('ov').classList.remove('open'); });
+
+// ── wiring ───────────────────────────────────────────────
+document.querySelectorAll('.seg').forEach(s=>s.querySelectorAll('button').forEach(b=>b.onclick=()=>{ F[s.dataset.f]=b.dataset.v; shown=PAGE; sync(); render(); }));
+document.getElementById('selSector').onchange=e=>{ F.sector=e.target.value; shown=PAGE; render(); };
+document.getElementById('selStage').onchange=e=>{ F.stage=e.target.value; shown=PAGE; render(); };
+document.getElementById('search').oninput=e=>{ F.q=e.target.value.trim(); shown=PAGE; render(); };
+document.getElementById('selSort').onchange=e=>{ sortBy=e.target.value; shown=PAGE; render(); };
+document.getElementById('togOut').onchange=()=>charts(filtered());
+document.getElementById('moreBtn').onclick=()=>{ shown+=PAGE; render(); };
+document.querySelectorAll('.view-switch button').forEach(b=>b.onclick=()=>{
+  view=b.dataset.view;
+  document.querySelectorAll('.view-switch button').forEach(x=>x.classList.toggle('active',x===b));
+  document.getElementById('galleryView').style.display=view==='cards'?'':'none';
+  document.getElementById('tableView').style.display=view==='table'?'':'none';
+  render();
+});
+document.querySelectorAll('thead th.srt').forEach(th=>th.onclick=()=>{
+  const m={date:'date',name:'name',amount_m:'amt'}[th.dataset.s];
+  if(!m)return;
+  sortBy=(sortBy===m+'-desc')?m+'-asc':m+'-desc';
+  document.getElementById('selSort').value=['date-desc','date-asc','amt-desc','amt-asc','name-asc','score-desc','score-asc'].includes(sortBy)?sortBy:'date-desc';
+  render();
+});
+
+function initDropdowns(){
+  const sc={},st={};
+  RAW.forEach(d=>{ if(d.sector_group)sc[d.sector_group]=(sc[d.sector_group]||0)+1; if(d.stage)st[d.stage]=(st[d.stage]||0)+1; });
+  const a=document.getElementById('selSector');
+  Object.keys(sc).sort((x,y)=>sc[y]-sc[x]).forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s+' ('+sc[s]+')'; a.appendChild(o); });
+  const order=['Pre-Seed','Seed','Series A','Series B','Series C','Series D','Series E','Series F','Series G','Series H','Growth','Private Equity','Strategic','Debt','Bridge','Grant / Government','Reverse Takeover','Acquisition','IPO','Fund','Other','Undisclosed'];
+  const b=document.getElementById('selStage');
+  order.filter(s=>st[s]).forEach(s=>{ const o=document.createElement('option'); o.value=s; o.textContent=s+' ('+st[s]+')'; b.appendChild(o); });
+}
+
+function render(){
+  const d=filtered();
+  const s=sortData(d);
+  stats(d);
+  // Charts must never be able to take down the deal list, which is the core content.
+  try{ charts(d); }catch(err){ console.error('chart render failed:',err); }
+  if(view==='cards')cards(s); else table(s);
+  chips();
+  document.getElementById('countBadge').textContent=(d.length===RAW.length)?RAW.length+' deals':d.length+' of '+RAW.length;
+  document.getElementById('dealSub').textContent=view==='cards'?'Tap any card for the full story':'Click a column to sort · tap a row for details';
+}
+
+fetch('/data/deals.json')
+  .then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(rows=>{ RAW=prepare(rows); heroDate(); initDropdowns(); render(); })
+  .catch(err=>{
+    console.error('could not load deals:',err);
+    document.getElementById('gallery').innerHTML='<div class="empty" style="grid-column:1/-1"><h4>Could not load the deal data</h4><p>Please refresh the page.</p></div>';
+  });
+</script>
+</body>
+</html>

@@ -12527,6 +12527,31 @@
   "flags": []
  },
  {
+  "id": "2026-10-28-anthropic-ipo",
+  "date": "2026-10-28",
+  "type": "ipo",
+  "name": "Anthropic",
+  "company_id": "anthropic",
+  "stage": "Undisclosed",
+  "sector": "AI",
+  "sector_group": "AI & Infrastructure",
+  "region": "Undisclosed",
+  "subdivision": null,
+  "country": null,
+  "roundsize": "Undisclosed",
+  "amount_usd_m": null,
+  "amount_cad_m": null,
+  "fx_usdcad": null,
+  "fx_date": null,
+  "note": "Anthropic filed for an IPO, with nearly a third of the prospectus devoted to risk factors, including four copyright actions in Canada and multiple US copyright suits. The filing also shows roughly $400 billion in future compute and data-centre obligations and an $80 billion net loss in the first half of 2026.",
+  "sources": [
+   "https://betakit.com/anthropic-ipo-filing-lists-a-canada-based-risk/"
+  ],
+  "flags": [
+   "region_unknown"
+  ]
+ },
+ {
   "id": "2026-10-28-wealthsimple-raise",
   "date": "2026-10-28",
   "type": "raise",
@@ -12546,6 +12571,261 @@
   "note": "Wealthsimple, a Toronto robo-adviser that has expanded into banking and other money management services, agreed to up to $425M CAD from existing investors at a $13.8B post-money valuation. The deal includes $300M in new primary equity for its product and technology roadmap and a $125M secondary sale of employee shares.",
   "sources": [
    "https://betakit.com/wealthsimple-announces-425-million-financing-at-13-8-billion-valuation/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-10-29-bot-food-corporation-raise",
+  "date": "2026-10-29",
+  "type": "raise",
+  "name": "Bot Food Corporation",
+  "company_id": "bot-food-corporation",
+  "stage": "Pre-Seed",
+  "sector": "AI Data Ownership",
+  "sector_group": "Enterprise Software",
+  "region": "Toronto",
+  "subdivision": "ON",
+  "country": "CA",
+  "roundsize": "CAD 1.5 mil",
+  "amount_usd_m": 1.07,
+  "amount_cad_m": 1.5,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Bot Food is building a personal context library that lets individuals control and own the data they share with AI products across platforms, and launched a beta app. The all-equity pre-seed round, closed in October, brings its total funding to $3 million, and the valuation was not disclosed.",
+  "sources": [
+   "https://betakit.com/bot-food-secures-1-5-million-to-give-ai-users-more-control-over-their-data/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-10-29-cohere-raise",
+  "date": "2026-10-29",
+  "type": "raise",
+  "name": "Cohere",
+  "company_id": "cohere",
+  "stage": "Growth",
+  "sector": "AI",
+  "sector_group": "AI & Infrastructure",
+  "region": "Toronto",
+  "subdivision": "ON",
+  "country": "CA",
+  "roundsize": "CAD 7 bil",
+  "amount_usd_m": 5002.5,
+  "amount_cad_m": 7000.0,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Cohere is a Toronto-based AI company building enterprise AI models and products. It is raising a planned Series E of up to CAD 7 billion at a near-$36 billion post-money valuation, with the Government of Canada taking a CAD 1.6 billion stake and Schwarz Group leading the round.",
+  "sources": [
+   "https://betakit.com/canada-to-invest-up-to-1-6-billion-in-ai-firm-cohere/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-10-29-solink-raise",
+  "date": "2026-10-29",
+  "type": "raise",
+  "name": "Solink",
+  "company_id": "solink",
+  "stage": "Undisclosed",
+  "sector": "AI Vision Intelligence",
+  "sector_group": "AI & Infrastructure",
+  "region": "Ottawa",
+  "subdivision": "ON",
+  "country": "CA",
+  "roundsize": "more than USD 100 mil",
+  "amount_usd_m": 100.0,
+  "amount_cad_m": 139.93,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Solink, an Ottawa surveillance tech company, is expanding its cloud surveillance platform for restaurants and retailers into AI-powered business intelligence for physical stores. The strategic round is a mix of primary and secondary capital, with over 90 percent going to Solink's balance sheet, and the CEO did not disclose the exact amount raised.",
+  "sources": [
+   "https://betakit.com/solink-raises-more-than-100-million-usd-to-help-physical-stores-keep-an-eye-on-their-business/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-10-30-bloomsco-raise",
+  "date": "2026-10-30",
+  "type": "raise",
+  "name": "Bloomsco",
+  "company_id": "bloomsco",
+  "stage": "Pre-Seed",
+  "sector": "Defence Tech",
+  "sector_group": "Defence & Aerospace",
+  "region": "Montréal",
+  "subdivision": "QC",
+  "country": "CA",
+  "roundsize": "$1 million",
+  "amount_usd_m": 1.0,
+  "amount_cad_m": 1.4,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Bloomsco uses AI to turn technical manuals, data, and product specs into training plans, learning materials, and simulation scenarios for defence contractors and the military. The $1M pre-seed equity round was led by BDC Capital's Seed Venture Fund and Telegraph Ventures, and will fund engineering hiring and work toward classified, air-gapped deployments.",
+  "sources": [
+   "https://betakit.com/bloomsco-raises-1-million-pre-seed-from-bdc-telegraph-for-military-training-platform/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-11-02-hey-cleo-raise",
+  "date": "2026-11-02",
+  "type": "raise",
+  "name": "Hey Cleo",
+  "company_id": "hey-cleo",
+  "stage": "Undisclosed",
+  "sector": "EdTech",
+  "sector_group": "Consumer & Commerce",
+  "region": "Canada",
+  "subdivision": null,
+  "country": "CA",
+  "roundsize": "$100,000",
+  "amount_usd_m": 0.1,
+  "amount_cad_m": 0.14,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Hey Cleo is an edtech platform with a conversational assessment product. It won the top prize at DMZ's sixth Black Innovation Summit, receiving $100,000 in investment from DMZ Ventures plus a $10,000 grant from the Black Founders Network.",
+  "sources": [
+   "https://betakit.com/hey-cleo-wins-100000-investment-at-dmzs-black-innovation-summit/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-11-04-ada-ma",
+  "date": "2026-11-04",
+  "type": "ma",
+  "name": "Ada",
+  "company_id": "ada",
+  "stage": "Acquisition",
+  "sector": "AI Customer Service",
+  "sector_group": "AI & Infrastructure",
+  "region": "Toronto",
+  "subdivision": "ON",
+  "country": "CA",
+  "roundsize": "CAD 600 mil",
+  "amount_usd_m": 428.79,
+  "amount_cad_m": 600.0,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Ada, an AI customer service company that began by building chatbots, is merging with California-based Dialpad in an all-share deal expected to close around Nov. 12. The Globe and Mail reported the deal values Ada at about $600 million CAD, versus the $1.7 billion CAD valuation from its 2021 Series C, and the companies did not disclose terms.",
+  "sources": [
+   "https://betakit.com/ada-to-merge-with-dialpad-in-deal-reportedly-valuing-firm-at-600-million/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-11-05-beacon-software-raise",
+  "date": "2026-11-05",
+  "type": "raise",
+  "name": "Beacon Software",
+  "company_id": "beacon-software",
+  "stage": "Series C",
+  "sector": "AI Holding / Software Rollup",
+  "sector_group": "Enterprise Software",
+  "region": "Toronto",
+  "subdivision": "ON",
+  "country": "CA",
+  "roundsize": "USD 50 mil",
+  "amount_usd_m": 50.0,
+  "amount_cad_m": 69.97,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Beacon Software acquires software companies and integrates AI into their operations, with 45 portfolio companies and over USD 200 mil in consolidated annual revenue. CPPIB's USD 50 mil investment upsized its Series C to USD 425 mil total, and the company is valued at USD 1.75 bil.",
+  "sources": [
+   "https://betakit.com/cppib-takes-50-million-usd-stake-in-ai-holding-firm-beacon-software/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-11-10-blue-j-raise",
+  "date": "2026-11-10",
+  "type": "raise",
+  "name": "Blue J",
+  "company_id": "blue-j",
+  "stage": "Series E",
+  "sector": "AI Tax Research",
+  "sector_group": "Enterprise Software",
+  "region": "Toronto",
+  "subdivision": "ON",
+  "country": "CA",
+  "roundsize": "USD 176 mil",
+  "amount_usd_m": 176.0,
+  "amount_cad_m": 246.28,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Blue J provides an AI-powered tax research platform covering federal, state, and local taxes in the US, Canada, and the UK, and is building agentic AI workflows for tax professionals. The Series E values the company at more than USD 700 million and included a secondary component buying out long-term holders, though the secondary amount was not disclosed.",
+  "sources": [
+   "https://betakit.com/ai-tax-research-platform-blue-j-raises-176-million-usd-series-e/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-11-10-odessia-ma",
+  "date": "2026-11-10",
+  "type": "ma",
+  "name": "Odessia",
+  "company_id": "odessia",
+  "stage": "Acquisition",
+  "sector": "AI Travel",
+  "sector_group": "Consumer & Commerce",
+  "region": "Undisclosed",
+  "subdivision": null,
+  "country": null,
+  "roundsize": "Undisclosed",
+  "amount_usd_m": null,
+  "amount_cad_m": null,
+  "fx_usdcad": null,
+  "fx_date": null,
+  "note": "Odessia built an AI travel agent that creates bookable itineraries matching user preferences, and its founder Francis Davidson, a former Sonder CEO, says it planned about $60 million in travel last summer. OpenAI acquired the company for an undisclosed price, and Odessia's service is no longer available.",
+  "sources": [
+   "https://betakit.com/openai-acquires-sonder-co-founders-new-travel-tech-company-odessia/"
+  ],
+  "flags": [
+   "region_unknown"
+  ]
+ },
+ {
+  "id": "2026-11-11-goodfood-ma",
+  "date": "2026-11-11",
+  "type": "ma",
+  "name": "Goodfood",
+  "company_id": "goodfood",
+  "stage": "Acquisition",
+  "sector": "Meal Kit / Food Delivery",
+  "sector_group": "Consumer & Commerce",
+  "region": "Montréal",
+  "subdivision": "QC",
+  "country": "CA",
+  "roundsize": "Undisclosed",
+  "amount_usd_m": null,
+  "amount_cad_m": null,
+  "fx_usdcad": null,
+  "fx_date": null,
+  "note": "Goodfood, a Montréal-based meal kit company, is being acquired out of creditor protection by Vancouver-based peer Fresh Prep in a court-approved sale. The purchase price was not disclosed, and the deal is scheduled to close shortly after the announcement, with Fresh Prep taking on about 30,000 active Goodfood customers.",
+  "sources": [
+   "https://betakit.com/fresh-prep-to-acquire-meal-kit-service-goodfood-in-court-approved-sale/"
+  ],
+  "flags": []
+ },
+ {
+  "id": "2026-11-12-northside-ventures-fund",
+  "date": "2026-11-12",
+  "type": "fund",
+  "name": "Northside Ventures",
+  "company_id": "northside-ventures",
+  "stage": "Fund",
+  "sector": "Venture Capital",
+  "sector_group": "Enterprise Software",
+  "region": "Toronto",
+  "subdivision": "ON",
+  "country": "CA",
+  "roundsize": "USD 30 mil",
+  "amount_usd_m": 30.0,
+  "amount_cad_m": 41.98,
+  "fx_usdcad": 1.3993,
+  "fx_date": "2026-10-23",
+  "note": "Northside Ventures, a Toronto-based VC firm, launched Fund II to back pre-seed Canadian tech founders, targeting USD 30 million with USD 17 million already committed across two closes. The firm plans larger average first cheques of USD 500,000 and aims to invest in 40 companies.",
+  "sources": [
+   "https://betakit.com/northside-ventures-aims-to-build-institutional-angel-investor-with-30-million-usd-second-fund/"
   ],
   "flags": []
  }

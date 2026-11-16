@@ -3,7 +3,7 @@
 Once `startup-tracker` is merged into `main`, the site reads its deals from
 `data/deals.json`. The old dealbot scripts would break it:
 
-- `publish.py` rebuilds the page from Excel and copies it over `index.html`, undoing the new page.
+- `publish.py` rebuilds the page from Excel and copies it over the tracker page (`tracker.html`; `index.html` before the landing page), undoing the new page.
 - `run.py` (through `score.py`) reads the deal list out of the page's HTML, which is no longer there, so it crashes.
 - `review.py` writes approved deals to `Startup Activity.xlsx`, which the site no longer reads.
 

@@ -8,7 +8,7 @@ PENDING = pathlib.Path("pending.json")
 SEEN = pathlib.Path("seen.json")
 
 # The tracker's deal data. Every deal lists its source articles in "sources".
-DEALS_URL = "https://sikandk.github.io/startup-tracker/data/deals.json"
+DEALS_URL = "https://cubant.com/data/deals.json"
 
 
 def existing_sources():
